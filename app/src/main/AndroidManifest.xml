@@ -34,6 +34,13 @@
         <activity android:name=".ui.YouTubeResultsActivity" android:exported="false" />
         <activity android:name=".ui.EditarPerfilActivity" android:exported="false" />
         <activity android:name=".ui.MiActividadActivity" android:exported="false" />
+        <activity android:name=".ui.ComentariosActivity" android:exported="false" />
+        <activity android:name=".ui.PerfilPublicoActivity" android:exported="false" />
+        <activity android:name=".ui.NotificacionesActivity" android:exported="false" />
+        <activity android:name=".ui.PrivacidadActivity" android:exported="false" />
+        <activity android:name=".ui.LogrosActivity" android:exported="false" />
+        <activity android:name=".ui.AcercaDeActivity" android:exported="false" />
+        <activity android:name=".ui.AyudaActivity" android:exported="false" />
 
     </application>
 </manifest>

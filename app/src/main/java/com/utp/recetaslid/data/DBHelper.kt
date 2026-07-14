@@ -4,12 +4,13 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.utp.recetaslid.model.Comentario
 import com.utp.recetaslid.model.Receta
 import com.utp.recetaslid.model.Usuario
 
 // Base de datos local de la aplicacion (SQLite)
 class DBHelper(context: Context) :
-    SQLiteOpenHelper(context, "recetas_lid.db", null, 2) {
+    SQLiteOpenHelper(context, "recetas_lid.db", null, 3) {
 
     override fun onCreate(db: SQLiteDatabase) {
         // Tabla de usuarios
@@ -37,6 +38,12 @@ class DBHelper(context: Context) :
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, usuarioId INTEGER, " +
                 "item TEXT, precio REAL, comprado INTEGER DEFAULT 0)"
         )
+        // Tabla de comentarios
+        db.execSQL(
+            "CREATE TABLE comentarios (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, usuarioId INTEGER, " +
+                "recetaId INTEGER, texto TEXT, fecha TEXT)"
+        )
         // Cargamos los datos iniciales (admin + recetas de ejemplo)
         SeedData.cargar(db)
     }
@@ -46,6 +53,7 @@ class DBHelper(context: Context) :
         db.execSQL("DROP TABLE IF EXISTS recetas")
         db.execSQL("DROP TABLE IF EXISTS favoritos")
         db.execSQL("DROP TABLE IF EXISTS compras")
+        db.execSQL("DROP TABLE IF EXISTS comentarios")
         onCreate(db)
     }
 
@@ -351,6 +359,50 @@ class DBHelper(context: Context) :
         while (c.moveToNext()) lista.add(cursorAReceta(c))
         c.close()
         return lista
+    }
+
+    // ---------------- COMENTARIOS ----------------
+
+    fun insertarComentario(usuarioId: Int, recetaId: Int, texto: String) {
+        val v = ContentValues().apply {
+            put("usuarioId", usuarioId)
+            put("recetaId", recetaId)
+            put("texto", texto)
+            put("fecha", System.currentTimeMillis().toString())
+        }
+        writableDatabase.insert("comentarios", null, v)
+    }
+
+    fun listarComentarios(recetaId: Int): List<Comentario> {
+        val lista = mutableListOf<Comentario>()
+        val c = readableDatabase.rawQuery(
+            "SELECT c.id, c.usuarioId, c.recetaId, c.texto, c.fecha, u.nombre " +
+                "FROM comentarios c LEFT JOIN usuarios u ON c.usuarioId = u.id " +
+                "WHERE c.recetaId = ? ORDER BY c.id DESC",
+            arrayOf(recetaId.toString())
+        )
+        while (c.moveToNext()) {
+            lista.add(
+                Comentario(
+                    c.getInt(0), c.getInt(1), c.getInt(2),
+                    c.getString(3), c.getString(4),
+                    c.getString(5) ?: "Usuario"
+                )
+            )
+        }
+        c.close()
+        return lista
+    }
+
+    fun contarComentarios(recetaId: Int): Int {
+        val c = readableDatabase.rawQuery(
+            "SELECT COUNT(*) FROM comentarios WHERE recetaId = ?", arrayOf(recetaId.toString())
+        )
+        c.moveToFirst(); val t = c.getInt(0); c.close(); return t
+    }
+
+    fun eliminarComentario(id: Int) {
+        writableDatabase.delete("comentarios", "id = ?", arrayOf(id.toString()))
     }
 
     // ---------------- UTILIDADES ----------------

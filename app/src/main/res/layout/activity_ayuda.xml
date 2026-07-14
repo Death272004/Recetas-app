@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gris_claro">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/naranja"
+        android:padding="14dp"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="‹"
+            android:textColor="@color/naranja"
+            android:backgroundTint="@color/blanco"
+            android:textSize="18sp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ayuda y Soporte"
+            android:textColor="@color/blanco"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginStart="12dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Preguntas frecuentes"
+                android:textColor="@color/gris"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <LinearLayout
+                android:id="@+id/faq1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_tarjeta"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Como busco recetas?"
+                    android:textColor="@color/naranja"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/faq1Resp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="En la pantalla principal, escribe los ingredientes que tienes separados por coma (ejemplo: pollo, arroz, cebolla). La app te mostrara las recetas que puedes preparar, ordenadas por menor cantidad de ingredientes faltantes."
+                    android:textColor="@color/negro"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/faq2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_tarjeta"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Como guardo una receta en favoritos?"
+                    android:textColor="@color/naranja"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/faq2Resp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Abre el detalle de cualquier receta y toca el boton 'Agregar a favoritos'. Tambien puedes dar like (♥) desde el Feed. Las recetas con like aparecen en tu seccion de Favoritos."
+                    android:textColor="@color/negro"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/faq3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_tarjeta"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Como creo mi propia receta?"
+                    android:textColor="@color/naranja"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/faq3Resp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ve a la seccion Otros y selecciona 'Crear receta'. Llena el titulo, ingredientes, pasos, tiempo, costo y opcionalmente un enlace de video. Tu receta aparecera en el Feed para que otros usuarios la vean."
+                    android:textColor="@color/negro"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/faq4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_tarjeta"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Como funciona la lista de compras?"
+                    android:textColor="@color/naranja"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/faq4Resp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="En el detalle de una receta, toca 'Anadir lo que me falta a compras'. Los ingredientes que no tienes se agregan a tu lista. Puedes marcarlos como comprados o eliminarlos desde la seccion Compras."
+                    android:textColor="@color/negro"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/faq5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_tarjeta"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Puedo usar la app sin cuenta?"
+                    android:textColor="@color/naranja"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/faq5Resp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Si, puedes usar el modo invitado tocando 'Continuar sin cuenta' en la pantalla de inicio. Podras buscar y ver recetas, pero no podras dar like, comentar, crear recetas ni usar la lista de compras."
+                    android:textColor="@color/negro"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/faq6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_tarjeta"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Como reporto una receta inapropiada?"
+                    android:textColor="@color/naranja"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/faq6Resp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Abre el detalle de la receta y toca el boton 'Reportar receta' al final de la pagina. Un administrador revisara el reporte y decidira si elimina la receta."
+                    android:textColor="@color/negro"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contacto"
+                android:textColor="@color/gris"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_tarjeta"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Si tienes problemas o sugerencias, contacta al administrador de la aplicacion a traves del correo registrado en la app."
+                    android:textColor="@color/negro"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

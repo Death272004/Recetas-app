@@ -45,12 +45,25 @@ class FeedActivity : AppCompatActivity() {
                 db.alternarFavorito(sesion.getUsuarioId(), post.recetaId)
                 cargarFeed()
             },
+            alComentar = { post ->
+                val i = Intent(this, ComentariosActivity::class.java)
+                i.putExtra("recetaId", post.recetaId)
+                i.putExtra("recetaTitulo", post.recipeTitle)
+                startActivity(i)
+            },
             alCompartir = { post ->
                 val shareIntent = Intent(Intent.ACTION_SEND).apply {
                     type = "text/plain"
                     putExtra(Intent.EXTRA_TEXT, "Mira esta receta: ${post.recipeTitle}\nDescargala en RECETAS LID")
                 }
                 startActivity(Intent.createChooser(shareIntent, "Compartir receta"))
+            },
+            alTocarUsuario = { post ->
+                if (post.autorId != 0) {
+                    val i = Intent(this, PerfilPublicoActivity::class.java)
+                    i.putExtra("usuarioId", post.autorId)
+                    startActivity(i)
+                }
             }
         )
         binding.recyclerFeed.layoutManager = LinearLayoutManager(this)
@@ -70,12 +83,14 @@ class FeedActivity : AppCompatActivity() {
             else db.obtenerUsuario(r.autorId)?.nombre ?: "Usuario"
             FeedPost(
                 recetaId = r.id,
+                autorId = r.autorId,
                 userName = autor,
                 userInitial = autor.first().uppercase(),
                 recipeTitle = r.titulo,
                 imagen = r.imagen,
                 likes = db.contarLikesReceta(r.id),
-                isLiked = if (userId != -1) db.esFavorito(userId, r.id) else false
+                isLiked = if (userId != -1) db.esFavorito(userId, r.id) else false,
+                comentarios = db.contarComentarios(r.id)
             )
         }
         adapter.actualizar(posts)

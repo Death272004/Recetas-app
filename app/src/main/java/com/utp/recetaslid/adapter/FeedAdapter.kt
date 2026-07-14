@@ -13,7 +13,9 @@ class FeedAdapter(
     private var posts: List<FeedPost>,
     private val alTocar: (FeedPost) -> Unit,
     private val alLike: (FeedPost) -> Unit,
-    private val alCompartir: (FeedPost) -> Unit
+    private val alComentar: (FeedPost) -> Unit,
+    private val alCompartir: (FeedPost) -> Unit,
+    private val alTocarUsuario: (FeedPost) -> Unit
 ) : RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
 
     inner class FeedViewHolder(val binding: ItemFeedPostBinding) :
@@ -59,10 +61,15 @@ class FeedAdapter(
             holder.binding.btnLike.setTextColor(ctx.getColor(R.color.gris))
         }
 
+        val comentarioText = if (post.comentarios > 0) "💬  ${post.comentarios}" else "💬  Comentar"
+        holder.binding.btnComentar.text = comentarioText
+
         holder.binding.root.setOnClickListener { alTocar(post) }
         holder.binding.btnLike.setOnClickListener { alLike(post) }
-        holder.binding.btnComentar.setOnClickListener { alTocar(post) }
+        holder.binding.btnComentar.setOnClickListener { alComentar(post) }
         holder.binding.btnCompartir.setOnClickListener { alCompartir(post) }
+        holder.binding.txtUserName.setOnClickListener { alTocarUsuario(post) }
+        holder.binding.txtAvatar.setOnClickListener { alTocarUsuario(post) }
     }
 
     override fun getItemCount(): Int = posts.size
