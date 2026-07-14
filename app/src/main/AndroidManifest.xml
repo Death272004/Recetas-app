@@ -28,10 +28,13 @@
         <activity android:name=".ui.FavoritosActivity" android:exported="false" />
         <activity android:name=".ui.ComprasActivity" android:exported="false" />
         <activity android:name=".ui.AdminActivity" android:exported="false" />
+        <activity android:name=".ui.AdminUsuariosActivity" android:exported="false" />
+        <activity android:name=".ui.AdminRecetasActivity" android:exported="false" />
+        <activity android:name=".ui.AdminComentariosActivity" android:exported="false" />
+        <activity android:name=".ui.AdminLogsActivity" android:exported="false" />
         <activity android:name=".ui.FeedActivity" android:exported="false" />
         <activity android:name=".ui.OtrosActivity" android:exported="false" />
         <activity android:name=".ui.PerfilActivity" android:exported="false" />
-        <activity android:name=".ui.YouTubeResultsActivity" android:exported="false" />
         <activity android:name=".ui.EditarPerfilActivity" android:exported="false" />
         <activity android:name=".ui.MiActividadActivity" android:exported="false" />
         <activity android:name=".ui.ComentariosActivity" android:exported="false" />

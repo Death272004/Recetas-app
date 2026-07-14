@@ -51,6 +51,8 @@ object SeedData {
             put("correo", correo)
             put("clave", clave)
             put("rol", rol)
+            put("estado", "activo")
+            put("fechaRegistro", System.currentTimeMillis().toString())
         }
         db.insert("usuarios", null, v)
     }

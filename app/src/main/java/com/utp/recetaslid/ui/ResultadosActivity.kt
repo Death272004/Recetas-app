@@ -43,13 +43,5 @@ class ResultadosActivity : AppCompatActivity() {
         binding.recyclerResultados.adapter = adapter
 
         binding.btnVolver.setOnClickListener { finish() }
-
-        binding.btnBuscarYouTube.setOnClickListener {
-            val query = ingredientes.joinToString(" ")
-                .ifEmpty { "recetas economicas" }
-            val intent = Intent(this, YouTubeResultsActivity::class.java)
-            intent.putExtra("query", query)
-            startActivity(intent)
-        }
     }
 }

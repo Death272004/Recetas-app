@@ -69,7 +69,7 @@
             android:layout_width="0dp"
             android:layout_height="44dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_tarjeta"
+            android:background="@drawable/bg_campo"
             android:hint="Escribe un comentario..."
             android:inputType="textMultiLine"
             android:padding="10dp"

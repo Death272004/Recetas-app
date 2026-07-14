@@ -11,7 +11,9 @@ data class Receta(
     val autorId: Int,          // 0 = receta precargada del sistema
     val reportada: Boolean = false,
     val imagen: String = "",    // nombre del drawable sin extension
-    val videoUrl: String = ""   // URL embed de YouTube
+    val videoUrl: String = "",
+    val oculta: Boolean = false,
+    val destacada: Boolean = false
 ) {
     // Devuelve la lista de ingredientes ya separada y en minuscula
     fun listaIngredientes(): List<String> =

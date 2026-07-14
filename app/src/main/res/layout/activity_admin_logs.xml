@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/gris_claro">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/naranja"
+        android:background="@color/negro"
         android:padding="14dp"
         android:gravity="center_vertical">
 
@@ -17,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="‹"
-            android:textColor="@color/naranja"
+            android:textColor="@color/negro"
             android:backgroundTint="@color/blanco"
             android:textSize="18sp"
             android:paddingStart="14dp"
@@ -27,7 +28,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Recetas para ti"
+            android:text="Registro de Actividad"
             android:textColor="@color/blanco"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -35,26 +36,17 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/txtFiltro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="14dp"
-        android:text="Resultados"
-        android:textColor="@color/gris"
-        android:textSize="13sp" />
-
-    <TextView
         android:id="@+id/txtVacio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:gravity="center"
-        android:text="Con los ingredientes disponibles no puedes preparar ninguna receta."
+        android:text="No hay registros de actividad."
         android:textColor="@color/gris"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerResultados"
+        android:id="@+id/recyclerLogs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="14dp"

@@ -6,5 +6,7 @@ data class Comentario(
     val recetaId: Int,
     val texto: String,
     val fecha: String,
-    val nombreUsuario: String
+    val nombreUsuario: String,
+    val estado: String = "aprobado",
+    val tituloReceta: String = ""
 )

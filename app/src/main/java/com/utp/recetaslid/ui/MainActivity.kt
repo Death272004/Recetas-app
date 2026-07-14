@@ -58,17 +58,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.btnBuscarYouTube.setOnClickListener {
-            val texto = binding.edtIngredientes.text.toString().trim()
-            if (texto.isEmpty()) {
-                Toast.makeText(this, "Ingresa algo para buscar en YouTube", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            val intent = Intent(this, YouTubeResultsActivity::class.java)
-            intent.putExtra("query", texto)
-            startActivity(intent)
-        }
-
         binding.navHome.setOnClickListener { adapter.actualizar(db.listarRecetas()) }
         binding.navFeed.setOnClickListener { startActivity(Intent(this, FeedActivity::class.java)) }
 

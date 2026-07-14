@@ -1,9 +1,13 @@
 package com.utp.recetaslid.ui
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +24,7 @@ class DetalleRecetaActivity : AppCompatActivity() {
     private var receta: Receta? = null
     private var ingredientesUsuario: List<String> = emptyList()
     private var esInvitado = false
+    private var videoVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,15 +47,9 @@ class DetalleRecetaActivity : AppCompatActivity() {
         }
 
         mostrarReceta(r)
-        cargarVideo(r)
+        configurarVideo(r)
 
         binding.btnVolver.setOnClickListener { finish() }
-
-        binding.btnBuscarYouTube.setOnClickListener {
-            val intent = Intent(this, YouTubeResultsActivity::class.java)
-            intent.putExtra("query", r.titulo)
-            startActivity(intent)
-        }
 
         if (esInvitado) {
             binding.btnFavorito.visibility = View.GONE
@@ -75,7 +74,7 @@ class DetalleRecetaActivity : AppCompatActivity() {
             binding.btnReportar.setOnClickListener {
                 AlertDialog.Builder(this)
                     .setTitle("Reportar receta")
-                    .setMessage("¿Quieres reportar \"${r.titulo}\" como inapropiada? Un administrador la revisara.")
+                    .setMessage("Quieres reportar \"${r.titulo}\" como inapropiada? Un administrador la revisara.")
                     .setPositiveButton("Reportar") { _, _ ->
                         db.reportarReceta(r.id)
                         Toast.makeText(this, "Receta reportada", Toast.LENGTH_SHORT).show()
@@ -115,17 +114,119 @@ class DetalleRecetaActivity : AppCompatActivity() {
         binding.btnFavorito.text = if (esFav) "Quitar de favoritos" else "Agregar a favoritos"
     }
 
-    private fun cargarVideo(r: Receta) {
-        if (r.videoUrl.isNotEmpty()) {
+    private fun configurarVideo(r: Receta) {
+        val videoId = extraerVideoId(r.videoUrl)
+        if (videoId != null) {
+            binding.btnVerVideo.visibility = View.VISIBLE
+            binding.txtVideoNoDisponible.visibility = View.GONE
+
+            binding.btnVerVideo.setOnClickListener {
+                if (!videoVisible) {
+                    cargarVideoEmbebido(videoId)
+                    binding.videoContainer.visibility = View.VISIBLE
+                    binding.btnVerVideo.text = "▲  Ocultar video"
+                    videoVisible = true
+                } else {
+                    binding.webVideo.loadUrl("about:blank")
+                    binding.videoContainer.visibility = View.GONE
+                    binding.btnVerVideo.text = "▶  Ver tutorial"
+                    videoVisible = false
+                }
+            }
+        } else if (r.videoUrl.isNotEmpty()) {
             binding.btnVerVideo.visibility = View.VISIBLE
             binding.txtVideoNoDisponible.visibility = View.GONE
             binding.btnVerVideo.setOnClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(r.videoUrl)))
+                if (!videoVisible) {
+                    cargarVideoWeb(r.videoUrl)
+                    binding.videoContainer.visibility = View.VISIBLE
+                    binding.btnVerVideo.text = "▲  Ocultar video"
+                    videoVisible = true
+                } else {
+                    binding.webVideo.loadUrl("about:blank")
+                    binding.videoContainer.visibility = View.GONE
+                    binding.btnVerVideo.text = "▶  Ver tutorial"
+                    videoVisible = false
+                }
             }
         } else {
             binding.btnVerVideo.visibility = View.GONE
             binding.txtVideoNoDisponible.visibility = View.VISIBLE
         }
+    }
+
+    private fun cargarVideoEmbebido(videoId: String) {
+        val webView = binding.webVideo
+        val progress = binding.progressVideo
+        progress.visibility = View.VISIBLE
+
+        webView.settings.javaScriptEnabled = true
+        webView.settings.mediaPlaybackRequiresUserGesture = false
+        webView.settings.domStorageEnabled = true
+        webView.settings.loadWithOverviewMode = true
+        webView.settings.useWideViewPort = true
+
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                progress.visibility = View.GONE
+            }
+            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+                progress.visibility = View.GONE
+                Toast.makeText(this@DetalleRecetaActivity, "Error al cargar el video", Toast.LENGTH_SHORT).show()
+            }
+        }
+        webView.webChromeClient = WebChromeClient()
+
+        val html = """
+            <html><head>
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <style>*{margin:0;padding:0}body{background:#000}
+            .video{position:relative;width:100%;padding-bottom:56.25%;height:0}
+            .video iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+            </style></head><body>
+            <div class="video">
+            <iframe src="https://www.youtube.com/embed/$videoId?autoplay=1&rel=0&modestbranding=1&playsinline=1"
+            allow="autoplay;encrypted-media;fullscreen" allowfullscreen></iframe>
+            </div></body></html>
+        """.trimIndent()
+        webView.loadData(html, "text/html", "UTF-8")
+    }
+
+    private fun cargarVideoWeb(url: String) {
+        val webView = binding.webVideo
+        val progress = binding.progressVideo
+        progress.visibility = View.VISIBLE
+
+        webView.settings.javaScriptEnabled = true
+        webView.settings.domStorageEnabled = true
+        webView.settings.loadWithOverviewMode = true
+        webView.settings.useWideViewPort = true
+
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, u: String?) {
+                progress.visibility = View.GONE
+            }
+            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+                progress.visibility = View.GONE
+                Toast.makeText(this@DetalleRecetaActivity, "Error al cargar el video", Toast.LENGTH_SHORT).show()
+            }
+        }
+        webView.webChromeClient = WebChromeClient()
+        webView.loadUrl(url)
+    }
+
+    private fun extraerVideoId(url: String): String? {
+        if (url.isEmpty()) return null
+        val patterns = listOf(
+            Regex("youtube\\.com/watch\\?v=([a-zA-Z0-9_-]{11})"),
+            Regex("youtu\\.be/([a-zA-Z0-9_-]{11})"),
+            Regex("youtube\\.com/embed/([a-zA-Z0-9_-]{11})")
+        )
+        for (p in patterns) {
+            val match = p.find(url)
+            if (match != null) return match.groupValues[1]
+        }
+        return null
     }
 
     private fun anadirFaltantes(r: Receta) {
@@ -138,5 +239,11 @@ class DetalleRecetaActivity : AppCompatActivity() {
             db.agregarACompras(sesion.getUsuarioId(), ing, 0.40)
         }
         Toast.makeText(this, "${faltan.size} ingredientes anadidos a compras", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        binding.webVideo.loadUrl("about:blank")
+        binding.webVideo.destroy()
+        super.onDestroy()
     }
 }

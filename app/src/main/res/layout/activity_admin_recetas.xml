@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gris_claro">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/negro"
+        android:padding="14dp"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="‹"
+            android:textColor="@color/negro"
+            android:backgroundTint="@color/blanco"
+            android:textSize="18sp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Gestion de Recetas"
+            android:textColor="@color/blanco"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginStart="12dp" />
+
+        <TextView
+            android:id="@+id/txtConteo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/gris"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/etBuscar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_campo"
+        android:hint="Buscar receta por titulo..."
+        android:textColorHint="@color/gris"
+        android:textColor="@color/negro"
+        android:textSize="14sp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_margin="14dp"
+        android:inputType="text"
+        android:singleLine="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="8dp">
+
+        <Button
+            android:id="@+id/btnFiltroTodas"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="Todas"
+            android:textSize="12sp"
+            android:textColor="@color/blanco"
+            android:backgroundTint="@color/naranja"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btnFiltroReportadas"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="Reportadas"
+            android:textSize="12sp"
+            android:textColor="@color/negro"
+            android:backgroundTint="@color/gris_claro"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btnFiltroOcultas"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="Ocultas"
+            android:textSize="12sp"
+            android:textColor="@color/negro"
+            android:backgroundTint="@color/gris_claro" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtVacio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:gravity="center"
+        android:text="No se encontraron recetas."
+        android:textColor="@color/gris"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerRecetas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="14dp"
+        android:clipToPadding="false" />
+</LinearLayout>

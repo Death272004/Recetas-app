@@ -44,7 +44,13 @@ class LoginActivity : AppCompatActivity() {
 
         val usuario = db.login(correo, clave)
         if (usuario == null) {
-            Toast.makeText(this, "Correo o contrasena incorrectos", Toast.LENGTH_SHORT).show()
+            val estado = db.obtenerEstadoPorCredenciales(correo, clave)
+            val msg = when (estado) {
+                "bloqueado" -> "Tu cuenta ha sido bloqueada. Contacta al administrador."
+                "suspendido" -> "Tu cuenta esta suspendida temporalmente."
+                else -> "Correo o contrasena incorrectos"
+            }
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
             return
         }
 

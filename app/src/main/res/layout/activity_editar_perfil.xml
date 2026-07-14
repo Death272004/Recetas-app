@@ -54,7 +54,7 @@
             android:id="@+id/edtNombre"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/bg_tarjeta"
+            android:background="@drawable/bg_campo"
             android:hint="Tu nombre"
             android:inputType="textPersonName"
             android:padding="14dp"

@@ -105,16 +105,6 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp" />
 
-            <Button
-                android:id="@+id/btnBuscarYouTube"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/bg_boton_oscuro"
-                android:text="▶  Buscar videos en YouTube"
-                android:textColor="@color/blanco"
-                android:textStyle="bold"
-                android:layout_marginBottom="20dp" />
-
             <!-- Seccion de recetas recomendadas -->
             <TextView
                 android:layout_width="wrap_content"

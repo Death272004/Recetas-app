@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/gris_claro">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/naranja"
+        android:background="@color/negro"
         android:padding="14dp"
         android:gravity="center_vertical">
 
@@ -17,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="‹"
-            android:textColor="@color/naranja"
+            android:textColor="@color/negro"
             android:backgroundTint="@color/blanco"
             android:textSize="18sp"
             android:paddingStart="14dp"
@@ -27,29 +28,35 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Videos de YouTube"
+            android:text="Gestion de Usuarios"
             android:textColor="@color/blanco"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginStart="12dp" />
+
+        <TextView
+            android:id="@+id/txtConteo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/gris"
+            android:textSize="13sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/txtBusqueda"
+    <EditText
+        android:id="@+id/etBuscar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="14dp"
-        android:text="Resultados"
-        android:textColor="@color/gris"
-        android:textSize="13sp" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:visibility="gone" />
+        android:layout_height="48dp"
+        android:background="@drawable/bg_campo"
+        android:hint="Buscar por nombre o correo..."
+        android:textColorHint="@color/gris"
+        android:textColor="@color/negro"
+        android:textSize="14sp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_margin="14dp"
+        android:inputType="text"
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/txtVacio"
@@ -57,12 +64,12 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:gravity="center"
-        android:text="No se encontraron videos."
+        android:text="No se encontraron usuarios."
         android:textColor="@color/gris"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerVideos"
+        android:id="@+id/recyclerUsuarios"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="14dp"

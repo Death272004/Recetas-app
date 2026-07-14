@@ -111,26 +111,37 @@
                 android:visibility="gone"
                 android:layout_marginBottom="8dp" />
 
+            <FrameLayout
+                android:id="@+id/videoContainer"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:background="#000000"
+                android:visibility="gone"
+                android:layout_marginBottom="12dp">
+
+                <WebView
+                    android:id="@+id/webVideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <ProgressBar
+                    android:id="@+id/progressVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/naranja" />
+            </FrameLayout>
+
             <Button
                 android:id="@+id/btnVerVideo"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_boton_oscuro"
-                android:text="▶  Ver tutorial en YouTube"
+                android:text="▶  Ver tutorial"
                 android:textColor="@color/blanco"
                 android:textStyle="bold"
                 android:visibility="gone"
                 android:layout_marginBottom="8dp" />
-
-            <Button
-                android:id="@+id/btnBuscarYouTube"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/bg_boton_oscuro"
-                android:text="🔍  Buscar tutorial en YouTube"
-                android:textColor="@color/blanco"
-                android:textStyle="bold"
-                android:layout_marginBottom="12dp" />
 
             <Button
                 android:id="@+id/btnFavorito"

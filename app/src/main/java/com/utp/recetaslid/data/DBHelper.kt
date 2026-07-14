@@ -5,46 +5,55 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.utp.recetaslid.model.Comentario
+import com.utp.recetaslid.model.LogAdmin
 import com.utp.recetaslid.model.Receta
 import com.utp.recetaslid.model.Usuario
 
-// Base de datos local de la aplicacion (SQLite)
 class DBHelper(context: Context) :
-    SQLiteOpenHelper(context, "recetas_lid.db", null, 3) {
+    SQLiteOpenHelper(context, "recetas_lid.db", null, 4) {
 
     override fun onCreate(db: SQLiteDatabase) {
-        // Tabla de usuarios
         db.execSQL(
             "CREATE TABLE usuarios (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "nombre TEXT, correo TEXT UNIQUE, clave TEXT, rol TEXT)"
+                "nombre TEXT, correo TEXT UNIQUE, clave TEXT, rol TEXT, " +
+                "estado TEXT DEFAULT 'activo', " +
+                "fechaRegistro TEXT DEFAULT '', " +
+                "ultimoAcceso TEXT DEFAULT '')"
         )
-        // Tabla de recetas
         db.execSQL(
             "CREATE TABLE recetas (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "titulo TEXT, ingredientes TEXT, pasos TEXT, " +
                 "tiempo INTEGER, costo REAL, autorId INTEGER, reportada INTEGER DEFAULT 0, " +
-                "imagen TEXT, videoUrl TEXT)"
+                "imagen TEXT, videoUrl TEXT, " +
+                "oculta INTEGER DEFAULT 0, destacada INTEGER DEFAULT 0)"
         )
-        // Tabla de favoritos (relacion usuario - receta)
         db.execSQL(
             "CREATE TABLE favoritos (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, usuarioId INTEGER, recetaId INTEGER)"
         )
-        // Tabla de lista de compras
         db.execSQL(
             "CREATE TABLE compras (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, usuarioId INTEGER, " +
                 "item TEXT, precio REAL, comprado INTEGER DEFAULT 0)"
         )
-        // Tabla de comentarios
         db.execSQL(
             "CREATE TABLE comentarios (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, usuarioId INTEGER, " +
-                "recetaId INTEGER, texto TEXT, fecha TEXT)"
+                "recetaId INTEGER, texto TEXT, fecha TEXT, " +
+                "estado TEXT DEFAULT 'aprobado')"
         )
-        // Cargamos los datos iniciales (admin + recetas de ejemplo)
+        db.execSQL(
+            "CREATE TABLE logs_admin (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "adminId INTEGER, accion TEXT, detalle TEXT, fecha TEXT)"
+        )
+        db.execSQL(
+            "CREATE TABLE papelera (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "tipo TEXT, contenido TEXT, fechaEliminacion TEXT, eliminadoPor INTEGER)"
+        )
         SeedData.cargar(db)
     }
 
@@ -54,12 +63,13 @@ class DBHelper(context: Context) :
         db.execSQL("DROP TABLE IF EXISTS favoritos")
         db.execSQL("DROP TABLE IF EXISTS compras")
         db.execSQL("DROP TABLE IF EXISTS comentarios")
+        db.execSQL("DROP TABLE IF EXISTS logs_admin")
+        db.execSQL("DROP TABLE IF EXISTS papelera")
         onCreate(db)
     }
 
     // ---------------- USUARIOS ----------------
 
-    // Registra un usuario nuevo. Devuelve true si se creo correctamente
     fun registrarUsuario(nombre: String, correo: String, clave: String): Boolean {
         if (existeCorreo(correo)) return false
         val valores = ContentValues().apply {
@@ -67,6 +77,8 @@ class DBHelper(context: Context) :
             put("correo", correo)
             put("clave", clave)
             put("rol", "usuario")
+            put("estado", "activo")
+            put("fechaRegistro", System.currentTimeMillis().toString())
         }
         val resultado = writableDatabase.insert("usuarios", null, valores)
         return resultado != -1L
@@ -81,17 +93,21 @@ class DBHelper(context: Context) :
         return existe
     }
 
-    // Valida las credenciales y devuelve el usuario si son correctas
     fun login(correo: String, clave: String): Usuario? {
         val c = readableDatabase.rawQuery(
-            "SELECT id, nombre, correo, clave, rol FROM usuarios WHERE correo = ? AND clave = ?",
+            "SELECT id, nombre, correo, clave, rol, estado FROM usuarios WHERE correo = ? AND clave = ?",
             arrayOf(correo, clave)
         )
         var usuario: Usuario? = null
         if (c.moveToFirst()) {
-            usuario = Usuario(
-                c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4)
-            )
+            val estado = c.getString(5) ?: "activo"
+            if (estado != "bloqueado" && estado != "suspendido") {
+                usuario = Usuario(
+                    c.getInt(0), c.getString(1), c.getString(2),
+                    c.getString(3), c.getString(4), estado
+                )
+                actualizarUltimoAcceso(usuario.id)
+            }
         }
         c.close()
         return usuario
@@ -136,7 +152,9 @@ class DBHelper(context: Context) :
 
     fun listarRecetas(): List<Receta> {
         val lista = mutableListOf<Receta>()
-        val c = readableDatabase.rawQuery("SELECT * FROM recetas ORDER BY id DESC", null)
+        val c = readableDatabase.rawQuery(
+            "SELECT * FROM recetas WHERE oculta = 0 ORDER BY destacada DESC, id DESC", null
+        )
         while (c.moveToNext()) lista.add(cursorAReceta(c))
         c.close()
         return lista
@@ -170,8 +188,6 @@ class DBHelper(context: Context) :
 
     fun contarRecetas(): Int = contar("recetas")
 
-    // Busca recetas que usen al menos uno de los ingredientes indicados.
-    // Si soloEconomicas es true, filtra por costo bajo o pocos ingredientes.
     fun buscarPorIngredientes(ingredientes: List<String>, soloEconomicas: Boolean): List<Receta> {
         val resultado = mutableListOf<Receta>()
         val buscados = ingredientes.map { it.trim().lowercase() }.filter { it.isNotEmpty() }
@@ -183,13 +199,11 @@ class DBHelper(context: Context) :
             if (soloEconomicas && !(r.costo <= 2.0 || deLaReceta.size <= 3)) continue
             resultado.add(r)
         }
-        // Ordenamos por menor cantidad de ingredientes faltantes y luego por costo
         return resultado.sortedWith(
             compareBy({ faltantes(it, buscados).size }, { it.costo })
         )
     }
 
-    // Devuelve los ingredientes de la receta que NO estan en la lista del usuario
     fun faltantes(receta: Receta, disponibles: List<String>): List<String> {
         val disp = disponibles.map { it.trim().lowercase() }.filter { it.isNotEmpty() }
         return receta.listaIngredientes().filter { ing -> disp.none { ing.contains(it) || it.contains(ing) } }
@@ -206,7 +220,9 @@ class DBHelper(context: Context) :
             c.getInt(c.getColumnIndexOrThrow("autorId")),
             c.getInt(c.getColumnIndexOrThrow("reportada")) == 1,
             c.getString(c.getColumnIndexOrThrow("imagen")) ?: "",
-            c.getString(c.getColumnIndexOrThrow("videoUrl")) ?: ""
+            c.getString(c.getColumnIndexOrThrow("videoUrl")) ?: "",
+            c.getInt(c.getColumnIndexOrThrow("oculta")) == 1,
+            c.getInt(c.getColumnIndexOrThrow("destacada")) == 1
         )
     }
 
@@ -222,7 +238,6 @@ class DBHelper(context: Context) :
         return res
     }
 
-    // Agrega o quita de favoritos. Devuelve el nuevo estado (true = es favorito)
     fun alternarFavorito(usuarioId: Int, recetaId: Int): Boolean {
         return if (esFavorito(usuarioId, recetaId)) {
             writableDatabase.delete(
@@ -254,7 +269,6 @@ class DBHelper(context: Context) :
     // ---------------- LISTA DE COMPRAS ----------------
 
     fun agregarACompras(usuarioId: Int, item: String, precio: Double) {
-        // Evitamos duplicados del mismo item para el usuario
         val c = readableDatabase.rawQuery(
             "SELECT id FROM compras WHERE usuarioId = ? AND item = ?",
             arrayOf(usuarioId.toString(), item)
@@ -271,7 +285,6 @@ class DBHelper(context: Context) :
         writableDatabase.insert("compras", null, v)
     }
 
-    // Devuelve la lista de compras del usuario como tripletas (id, item, precio, comprado)
     fun listarCompras(usuarioId: Int): List<ItemCompra> {
         val lista = mutableListOf<ItemCompra>()
         val c = readableDatabase.rawQuery(
@@ -354,7 +367,8 @@ class DBHelper(context: Context) :
     fun buscarRecetas(query: String): List<Receta> {
         val lista = mutableListOf<Receta>()
         val c = readableDatabase.rawQuery(
-            "SELECT * FROM recetas WHERE titulo LIKE ? ORDER BY id DESC", arrayOf("%$query%")
+            "SELECT * FROM recetas WHERE oculta = 0 AND titulo LIKE ? ORDER BY id DESC",
+            arrayOf("%$query%")
         )
         while (c.moveToNext()) lista.add(cursorAReceta(c))
         c.close()
@@ -378,7 +392,7 @@ class DBHelper(context: Context) :
         val c = readableDatabase.rawQuery(
             "SELECT c.id, c.usuarioId, c.recetaId, c.texto, c.fecha, u.nombre " +
                 "FROM comentarios c LEFT JOIN usuarios u ON c.usuarioId = u.id " +
-                "WHERE c.recetaId = ? ORDER BY c.id DESC",
+                "WHERE c.recetaId = ? AND c.estado = 'aprobado' ORDER BY c.id DESC",
             arrayOf(recetaId.toString())
         )
         while (c.moveToNext()) {
@@ -405,6 +419,218 @@ class DBHelper(context: Context) :
         writableDatabase.delete("comentarios", "id = ?", arrayOf(id.toString()))
     }
 
+    // ---------------- ADMIN: USUARIOS ----------------
+
+    fun listarUsuariosAdmin(): List<Usuario> {
+        val lista = mutableListOf<Usuario>()
+        val c = readableDatabase.rawQuery(
+            "SELECT id, nombre, correo, clave, rol, estado, fechaRegistro, ultimoAcceso " +
+                "FROM usuarios ORDER BY id", null
+        )
+        while (c.moveToNext()) {
+            lista.add(
+                Usuario(
+                    c.getInt(0), c.getString(1), c.getString(2), c.getString(3),
+                    c.getString(4), c.getString(5) ?: "activo",
+                    c.getString(6) ?: "", c.getString(7) ?: ""
+                )
+            )
+        }
+        c.close()
+        return lista
+    }
+
+    fun buscarUsuariosAdmin(query: String): List<Usuario> {
+        val lista = mutableListOf<Usuario>()
+        val c = readableDatabase.rawQuery(
+            "SELECT id, nombre, correo, clave, rol, estado, fechaRegistro, ultimoAcceso " +
+                "FROM usuarios WHERE nombre LIKE ? OR correo LIKE ? ORDER BY id",
+            arrayOf("%$query%", "%$query%")
+        )
+        while (c.moveToNext()) {
+            lista.add(
+                Usuario(
+                    c.getInt(0), c.getString(1), c.getString(2), c.getString(3),
+                    c.getString(4), c.getString(5) ?: "activo",
+                    c.getString(6) ?: "", c.getString(7) ?: ""
+                )
+            )
+        }
+        c.close()
+        return lista
+    }
+
+    fun cambiarEstadoUsuario(id: Int, estado: String) {
+        val v = ContentValues().apply { put("estado", estado) }
+        writableDatabase.update("usuarios", v, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun cambiarRolUsuario(id: Int, rol: String) {
+        val v = ContentValues().apply { put("rol", rol) }
+        writableDatabase.update("usuarios", v, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun resetearClave(id: Int, nuevaClave: String) {
+        val v = ContentValues().apply { put("clave", nuevaClave) }
+        writableDatabase.update("usuarios", v, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun actualizarUltimoAcceso(id: Int) {
+        val v = ContentValues().apply { put("ultimoAcceso", System.currentTimeMillis().toString()) }
+        writableDatabase.update("usuarios", v, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun obtenerEstadoPorCredenciales(correo: String, clave: String): String? {
+        val c = readableDatabase.rawQuery(
+            "SELECT estado FROM usuarios WHERE correo = ? AND clave = ?",
+            arrayOf(correo, clave)
+        )
+        var estado: String? = null
+        if (c.moveToFirst()) estado = c.getString(0) ?: "activo"
+        c.close()
+        return estado
+    }
+
+    fun contarUsuariosActivos(): Int {
+        val c = readableDatabase.rawQuery(
+            "SELECT COUNT(*) FROM usuarios WHERE estado = 'activo'", null
+        )
+        c.moveToFirst(); val t = c.getInt(0); c.close(); return t
+    }
+
+    // ---------------- ADMIN: RECETAS ----------------
+
+    fun listarRecetasAdmin(): List<Receta> {
+        val lista = mutableListOf<Receta>()
+        val c = readableDatabase.rawQuery("SELECT * FROM recetas ORDER BY id DESC", null)
+        while (c.moveToNext()) lista.add(cursorAReceta(c))
+        c.close()
+        return lista
+    }
+
+    fun buscarRecetasAdmin(query: String): List<Receta> {
+        val lista = mutableListOf<Receta>()
+        val c = readableDatabase.rawQuery(
+            "SELECT * FROM recetas WHERE titulo LIKE ? ORDER BY id DESC", arrayOf("%$query%")
+        )
+        while (c.moveToNext()) lista.add(cursorAReceta(c))
+        c.close()
+        return lista
+    }
+
+    fun ocultarReceta(id: Int, oculta: Boolean) {
+        val v = ContentValues().apply { put("oculta", if (oculta) 1 else 0) }
+        writableDatabase.update("recetas", v, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun destacarReceta(id: Int, destacada: Boolean) {
+        val v = ContentValues().apply { put("destacada", if (destacada) 1 else 0) }
+        writableDatabase.update("recetas", v, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun quitarReporte(id: Int) {
+        val v = ContentValues().apply { put("reportada", 0) }
+        writableDatabase.update("recetas", v, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun contarReportesPendientes(): Int {
+        val c = readableDatabase.rawQuery(
+            "SELECT COUNT(*) FROM recetas WHERE reportada = 1", null
+        )
+        c.moveToFirst(); val t = c.getInt(0); c.close(); return t
+    }
+
+    // ---------------- ADMIN: COMENTARIOS ----------------
+
+    fun listarTodosComentarios(): List<Comentario> {
+        val lista = mutableListOf<Comentario>()
+        val c = readableDatabase.rawQuery(
+            "SELECT c.id, c.usuarioId, c.recetaId, c.texto, c.fecha, u.nombre, c.estado, r.titulo " +
+                "FROM comentarios c " +
+                "LEFT JOIN usuarios u ON c.usuarioId = u.id " +
+                "LEFT JOIN recetas r ON c.recetaId = r.id " +
+                "ORDER BY c.id DESC", null
+        )
+        while (c.moveToNext()) {
+            lista.add(
+                Comentario(
+                    c.getInt(0), c.getInt(1), c.getInt(2),
+                    c.getString(3), c.getString(4),
+                    c.getString(5) ?: "Usuario",
+                    c.getString(6) ?: "aprobado",
+                    c.getString(7) ?: "Receta eliminada"
+                )
+            )
+        }
+        c.close()
+        return lista
+    }
+
+    fun cambiarEstadoComentario(id: Int, estado: String) {
+        val v = ContentValues().apply { put("estado", estado) }
+        writableDatabase.update("comentarios", v, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun contarTodosComentarios(): Int = contar("comentarios")
+
+    // ---------------- ADMIN: LOGS ----------------
+
+    fun registrarLog(adminId: Int, accion: String, detalle: String) {
+        val v = ContentValues().apply {
+            put("adminId", adminId)
+            put("accion", accion)
+            put("detalle", detalle)
+            put("fecha", System.currentTimeMillis().toString())
+        }
+        writableDatabase.insert("logs_admin", null, v)
+    }
+
+    fun listarLogs(): List<LogAdmin> {
+        val lista = mutableListOf<LogAdmin>()
+        val c = readableDatabase.rawQuery(
+            "SELECT l.id, l.adminId, l.accion, l.detalle, l.fecha, u.nombre " +
+                "FROM logs_admin l LEFT JOIN usuarios u ON l.adminId = u.id " +
+                "ORDER BY l.id DESC", null
+        )
+        while (c.moveToNext()) {
+            lista.add(
+                LogAdmin(
+                    c.getInt(0), c.getInt(1), c.getString(2),
+                    c.getString(3), c.getString(4),
+                    c.getString(5) ?: "Admin"
+                )
+            )
+        }
+        c.close()
+        return lista
+    }
+
+    fun contarLogs(): Int = contar("logs_admin")
+
+    // ---------------- ADMIN: PAPELERA ----------------
+
+    fun moverAPapelera(tipo: String, contenido: String, eliminadoPor: Int) {
+        val v = ContentValues().apply {
+            put("tipo", tipo)
+            put("contenido", contenido)
+            put("fechaEliminacion", System.currentTimeMillis().toString())
+            put("eliminadoPor", eliminadoPor)
+        }
+        writableDatabase.insert("papelera", null, v)
+    }
+
+    // ---------------- ADMIN: STATS ----------------
+
+    fun obtenerNombreUsuario(id: Int): String {
+        val c = readableDatabase.rawQuery(
+            "SELECT nombre FROM usuarios WHERE id = ?", arrayOf(id.toString())
+        )
+        var nombre = "Sistema"
+        if (c.moveToFirst()) nombre = c.getString(0) ?: "Sistema"
+        c.close()
+        return nombre
+    }
+
     // ---------------- UTILIDADES ----------------
 
     private fun contar(tabla: String): Int {
@@ -416,7 +642,6 @@ class DBHelper(context: Context) :
     }
 }
 
-// Clase simple para representar un item de la lista de compras
 data class ItemCompra(
     val id: Int,
     val item: String,
