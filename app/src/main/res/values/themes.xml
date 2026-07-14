@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Tema claro (por defecto). DayNight conmuta a values-night en modo oscuro -->
+    <style name="Theme.RecetasLID" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/naranja</item>
+        <item name="colorPrimaryVariant">@color/naranja_oscuro</item>
+        <item name="colorOnPrimary">@color/blanco</item>
+        <item name="colorSecondary">@color/naranja</item>
+        <item name="colorOnSecondary">@color/blanco</item>
+        <item name="android:statusBarColor">@color/naranja_oscuro</item>
+        <item name="android:windowBackground">@color/gris_claro</item>
+    </style>
+    <style name="Theme.RecetasLID.Splash" parent="Theme.RecetasLID">
+        <item name="android:windowBackground">@color/negro</item>
+        <item name="android:statusBarColor">@color/negro</item>
+    </style>
+</resources>
