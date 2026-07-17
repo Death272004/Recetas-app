@@ -87,6 +87,7 @@
                 </LinearLayout>
 
                 <Switch
+                    android:textColor="@color/texto_principal"
                     android:id="@+id/switchNuevasRecetas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,6 +129,7 @@
                 </LinearLayout>
 
                 <Switch
+                    android:textColor="@color/texto_principal"
                     android:id="@+id/switchLikes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -169,6 +171,7 @@
                 </LinearLayout>
 
                 <Switch
+                    android:textColor="@color/texto_principal"
                     android:id="@+id/switchComentarios"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -210,6 +213,7 @@
                 </LinearLayout>
 
                 <Switch
+                    android:textColor="@color/texto_principal"
                     android:id="@+id/switchOfertas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

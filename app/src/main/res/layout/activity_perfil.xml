@@ -230,7 +230,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Editar perfil"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp" />
 
                     <TextView
@@ -263,7 +263,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Notificaciones"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp" />
 
                     <TextView
@@ -296,7 +296,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Privacidad"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp" />
 
                     <TextView
@@ -338,7 +338,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Mis logros"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp" />
 
                     <TextView
@@ -371,7 +371,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Mi actividad"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp" />
 
                     <TextView
@@ -413,7 +413,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Acerca de la app"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp" />
 
                     <TextView
@@ -446,7 +446,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Ayuda y soporte"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp" />
 
                     <TextView

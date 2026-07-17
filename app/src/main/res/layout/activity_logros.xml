@@ -111,6 +111,7 @@
                 android:layout_marginBottom="8dp">
 
                 <TextView
+                    android:textColor="@color/texto_principal"
                     android:id="@+id/iconReceta1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -153,6 +154,7 @@
                 android:layout_marginBottom="8dp">
 
                 <TextView
+                    android:textColor="@color/texto_principal"
                     android:id="@+id/iconReceta5"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -195,6 +197,7 @@
                 android:layout_marginBottom="20dp">
 
                 <TextView
+                    android:textColor="@color/texto_principal"
                     android:id="@+id/iconReceta10"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -246,6 +249,7 @@
                 android:layout_marginBottom="8dp">
 
                 <TextView
+                    android:textColor="@color/texto_principal"
                     android:id="@+id/iconFav1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -288,6 +292,7 @@
                 android:layout_marginBottom="8dp">
 
                 <TextView
+                    android:textColor="@color/texto_principal"
                     android:id="@+id/iconFav5"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -330,6 +335,7 @@
                 android:layout_marginBottom="20dp">
 
                 <TextView
+                    android:textColor="@color/texto_principal"
                     android:id="@+id/iconFav10"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -381,6 +387,7 @@
                 android:layout_marginBottom="8dp">
 
                 <TextView
+                    android:textColor="@color/texto_principal"
                     android:id="@+id/iconComentario1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -423,6 +430,7 @@
                 android:layout_marginBottom="24dp">
 
                 <TextView
+                    android:textColor="@color/texto_principal"
                     android:id="@+id/iconCompra1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
