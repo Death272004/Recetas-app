@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Titulo de receta"
-                android:textColor="@color/negro"
+                android:textColor="@color/texto_principal"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Por: Usuario"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="12sp"
                 android:layout_marginTop="2dp" />
         </LinearLayout>
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_badge_gris"
                 android:text="Oculta"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="10sp"
                 android:textStyle="bold"
                 android:visibility="gone"
@@ -86,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="5 ingredientes · 20 min · B/. 2.50"
-        android:textColor="@color/gris"
+        android:textColor="@color/texto_secundario"
         android:textSize="12sp"
         android:layout_marginTop="4dp" />
 

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="‹"
             android:textColor="@color/naranja"
-            android:backgroundTint="@color/blanco"
+            android:backgroundTint="@color/superficie"
             android:textSize="18sp"
             android:paddingStart="14dp"
             android:paddingEnd="14dp" />

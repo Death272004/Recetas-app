@@ -8,7 +8,7 @@
         <item name="colorSecondary">@color/naranja</item>
         <item name="colorOnSecondary">@color/blanco</item>
         <item name="android:statusBarColor">@color/naranja_oscuro</item>
-        <item name="android:windowBackground">@color/gris_claro</item>
+        <item name="android:windowBackground">@color/fondo_pantalla</item>
     </style>
     <style name="Theme.RecetasLID.Splash" parent="Theme.RecetasLID">
         <item name="android:windowBackground">@color/negro</item>

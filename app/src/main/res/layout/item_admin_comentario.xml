@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nombre usuario"
-                android:textColor="@color/negro"
+                android:textColor="@color/texto_principal"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Texto del comentario..."
-        android:textColor="@color/negro"
+        android:textColor="@color/texto_principal"
         android:textSize="13sp"
         android:layout_marginTop="8dp"
         android:maxLines="3"
@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hace 2 horas"
-        android:textColor="@color/gris"
+        android:textColor="@color/texto_secundario"
         android:textSize="11sp"
         android:layout_marginTop="4dp" />
 

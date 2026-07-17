@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Item"
-        android:textColor="@color/negro"
+        android:textColor="@color/texto_principal"
         android:textSize="15sp"
         android:layout_marginStart="6dp" />
 
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="B/. 0.00"
-        android:textColor="@color/gris"
+        android:textColor="@color/texto_secundario"
         android:textSize="13sp"
         android:textStyle="bold"
         android:layout_marginEnd="10dp" />

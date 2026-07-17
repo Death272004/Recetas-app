@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="‹"
             android:textColor="@color/naranja"
-            android:backgroundTint="@color/blanco"
+            android:backgroundTint="@color/superficie"
             android:textSize="18sp"
             android:paddingStart="14dp"
             android:paddingEnd="14dp" />
@@ -41,7 +41,7 @@
         android:padding="20dp"
         android:gravity="center"
         android:text="Aun no tienes recetas favoritas."
-        android:textColor="@color/gris"
+        android:textColor="@color/texto_secundario"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView

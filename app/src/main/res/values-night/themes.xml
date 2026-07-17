@@ -8,6 +8,6 @@
         <item name="colorSecondary">@color/naranja</item>
         <item name="colorOnSecondary">@color/blanco</item>
         <item name="android:statusBarColor">@color/negro</item>
-        <item name="android:windowBackground">#121212</item>
+        <item name="android:windowBackground">@color/fondo_pantalla</item>
     </style>
 </resources>

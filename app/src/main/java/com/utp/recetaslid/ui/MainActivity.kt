@@ -3,11 +3,13 @@ package com.utp.recetaslid.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.utp.recetaslid.adapter.RecetaAdapter
 import com.utp.recetaslid.data.DBHelper
 import com.utp.recetaslid.data.SessionManager
+import com.utp.recetaslid.data.ThemeManager
 import com.utp.recetaslid.databinding.ActivityMainBinding
 import com.utp.recetaslid.util.ImagenUtil
 
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         actualizarCabecera()
         binding.imgFotoPerfil.clipToOutline = true
         binding.txtInicialPerfil.clipToOutline = true
+        binding.btnTema.text = if (ThemeManager.esModoOscuro(this)) "Claro" else "Oscuro"
 
         binding.btnSalir.setOnClickListener {
             if (esInvitado) {
@@ -40,6 +43,16 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+        }
+
+        binding.btnTema.setOnClickListener {
+            val modoOscuroActivo = ThemeManager.alternarModo(this)
+            binding.btnTema.text = if (modoOscuroActivo) "Claro" else "Oscuro"
+            Toast.makeText(
+                this,
+                if (modoOscuroActivo) "Modo oscuro activado" else "Modo claro activado",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         adapter = RecetaAdapter(db.listarRecetas()) { receta ->

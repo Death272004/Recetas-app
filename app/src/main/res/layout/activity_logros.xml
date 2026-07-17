@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/gris_claro">
+    android:background="@color/fondo_pantalla">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="‹"
             android:textColor="@color/naranja"
-            android:backgroundTint="@color/blanco"
+            android:backgroundTint="@color/superficie"
             android:textSize="18sp"
             android:paddingStart="14dp"
             android:paddingEnd="14dp" />
@@ -74,7 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Logros desbloqueados"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Recetas"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
@@ -128,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Primera receta"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -137,7 +137,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Crea tu primera receta"
-                        android:textColor="@color/gris"
+                        android:textColor="@color/texto_secundario"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -170,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Chef activo"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -179,7 +179,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Crea 5 recetas"
-                        android:textColor="@color/gris"
+                        android:textColor="@color/texto_secundario"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -212,7 +212,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Chef experto"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -221,7 +221,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Crea 10 recetas"
-                        android:textColor="@color/gris"
+                        android:textColor="@color/texto_secundario"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -230,7 +230,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Favoritos"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
@@ -263,7 +263,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Explorador"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -272,7 +272,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Marca tu primer favorito"
-                        android:textColor="@color/gris"
+                        android:textColor="@color/texto_secundario"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -305,7 +305,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Coleccionista"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -314,7 +314,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Marca 5 favoritos"
-                        android:textColor="@color/gris"
+                        android:textColor="@color/texto_secundario"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -347,7 +347,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Gourmet"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -356,7 +356,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Marca 10 favoritos"
-                        android:textColor="@color/gris"
+                        android:textColor="@color/texto_secundario"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -365,7 +365,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Comunidad"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
@@ -398,7 +398,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Participante"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -407,7 +407,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Escribe tu primer comentario"
-                        android:textColor="@color/gris"
+                        android:textColor="@color/texto_secundario"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -440,7 +440,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Comprador"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -449,7 +449,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Anade tu primer item a compras"
-                        android:textColor="@color/gris"
+                        android:textColor="@color/texto_secundario"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>

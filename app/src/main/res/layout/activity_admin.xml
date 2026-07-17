@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gris_claro"
+    android:background="@color/fondo_pantalla"
     android:fillViewport="true">
 
     <LinearLayout
@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/negro"
+            android:background="@color/barra_admin"
             android:padding="18dp"
             android:gravity="center_vertical">
 
@@ -33,15 +33,15 @@
                 android:layout_height="wrap_content"
                 android:text="Salir"
                 android:textSize="12sp"
-                android:textColor="@color/negro"
-                android:backgroundTint="@color/blanco" />
+                android:textColor="@color/texto_principal"
+                android:backgroundTint="@color/superficie" />
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Resumen general"
-            android:textColor="@color/negro"
+            android:textColor="@color/texto_principal"
             android:textSize="16sp"
             android:textStyle="bold"
             android:paddingStart="16dp"
@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Usuarios"
-                    android:textColor="@color/gris"
+                    android:textColor="@color/texto_secundario"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -104,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Activos"
-                    android:textColor="@color/gris"
+                    android:textColor="@color/texto_secundario"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
@@ -139,7 +139,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Recetas"
-                    android:textColor="@color/gris"
+                    android:textColor="@color/texto_secundario"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -157,7 +157,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textColor="@color/gris"
+                    android:textColor="@color/texto_secundario"
                     android:textSize="28sp"
                     android:textStyle="bold" />
 
@@ -165,7 +165,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Comentarios"
-                    android:textColor="@color/gris"
+                    android:textColor="@color/texto_secundario"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
@@ -200,7 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Reportes"
-                    android:textColor="@color/gris"
+                    android:textColor="@color/texto_secundario"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -218,7 +218,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textColor="@color/gris"
+                    android:textColor="@color/texto_secundario"
                     android:textSize="28sp"
                     android:textStyle="bold" />
 
@@ -226,7 +226,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Acciones"
-                    android:textColor="@color/gris"
+                    android:textColor="@color/texto_secundario"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
@@ -235,7 +235,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gestion"
-            android:textColor="@color/negro"
+            android:textColor="@color/texto_principal"
             android:textSize="16sp"
             android:textStyle="bold"
             android:paddingStart="16dp"
@@ -276,7 +276,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gestion de Usuarios"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/texto_principal"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -284,7 +284,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Administrar cuentas, roles y estados"
-                    android:textColor="@color/gris"
+                    android:textColor="@color/texto_secundario"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -292,7 +292,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="›"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="24sp" />
         </LinearLayout>
 
@@ -329,7 +329,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gestion de Recetas"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/texto_principal"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -337,7 +337,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Moderar, ocultar y destacar publicaciones"
-                    android:textColor="@color/gris"
+                    android:textColor="@color/texto_secundario"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -345,7 +345,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="›"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="24sp" />
         </LinearLayout>
 
@@ -382,7 +382,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gestion de Comentarios"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/texto_principal"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -390,7 +390,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Aprobar, ocultar y eliminar comentarios"
-                    android:textColor="@color/gris"
+                    android:textColor="@color/texto_secundario"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -398,7 +398,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="›"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="24sp" />
         </LinearLayout>
 
@@ -435,7 +435,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Registro de Actividad"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/texto_principal"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -443,7 +443,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Historial de acciones administrativas"
-                    android:textColor="@color/gris"
+                    android:textColor="@color/texto_secundario"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -451,7 +451,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="›"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="24sp" />
         </LinearLayout>
     </LinearLayout>

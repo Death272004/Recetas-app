@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Accion realizada"
-            android:textColor="@color/negro"
+            android:textColor="@color/texto_principal"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Detalle de la accion..."
-            android:textColor="@color/gris"
+            android:textColor="@color/texto_secundario"
             android:textSize="12sp"
             android:layout_marginTop="2dp"
             android:maxLines="2"
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" · Hace 5 min"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="11sp" />
         </LinearLayout>
     </LinearLayout>

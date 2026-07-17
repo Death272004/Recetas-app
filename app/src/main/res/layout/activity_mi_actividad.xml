@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/gris_claro">
+    android:background="@color/fondo_pantalla">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="‹"
             android:textColor="@color/naranja"
-            android:backgroundTint="@color/blanco"
+            android:backgroundTint="@color/superficie"
             android:textSize="18sp"
             android:paddingStart="14dp"
             android:paddingEnd="14dp" />
@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="No has creado recetas aun"
-        android:textColor="@color/gris"
+        android:textColor="@color/texto_secundario"
         android:textSize="15sp"
         android:gravity="center"
         android:padding="32dp"

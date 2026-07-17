@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nombre"
-            android:textColor="@color/negro"
+            android:textColor="@color/texto_principal"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Usuario"
-            android:textColor="@color/gris"
+            android:textColor="@color/texto_secundario"
             android:textSize="12sp" />
     </LinearLayout>
 

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/gris_claro">
+    android:background="@color/fondo_pantalla">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="‹"
             android:textColor="@color/naranja"
-            android:backgroundTint="@color/blanco"
+            android:backgroundTint="@color/superficie"
             android:textSize="18sp"
             android:paddingStart="14dp"
             android:paddingEnd="14dp" />
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Version 1.0.0"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="14sp"
                 android:layout_marginBottom="32dp" />
 
@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Descripcion"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/texto_principal"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="RECETAS LID es una aplicacion de recetas de cocina que te permite buscar recetas por ingredientes, guardar tus favoritas, crear y compartir tus propias recetas, y gestionar tu lista de compras."
-                    android:textColor="@color/negro"
+                    android:textColor="@color/texto_principal"
                     android:textSize="14sp"
                     android:lineSpacingExtra="4dp" />
             </LinearLayout>
@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tecnologias"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/texto_principal"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
@@ -117,7 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="• Lenguaje: Kotlin\n• IDE: Android Studio\n• Base de datos: SQLite\n• UI: Material Components\n• API: YouTube Data API v3\n• Minimo: Android 7.0 (API 24)"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/texto_principal"
                     android:textSize="14sp"
                     android:lineSpacingExtra="4dp" />
             </LinearLayout>
@@ -134,7 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Creditos"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/texto_principal"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
@@ -143,7 +143,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Desarrollado como proyecto academico.\nTodos los derechos reservados."
-                    android:textColor="@color/negro"
+                    android:textColor="@color/texto_principal"
                     android:textSize="14sp"
                     android:lineSpacingExtra="4dp" />
             </LinearLayout>
@@ -152,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="© 2024 RECETAS LID"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="12sp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="24dp" />

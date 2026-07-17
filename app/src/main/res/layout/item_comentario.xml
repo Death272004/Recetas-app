@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Usuario"
-                android:textColor="@color/negro"
+                android:textColor="@color/texto_principal"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hace 1h"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Comentario"
-            android:textColor="@color/negro"
+            android:textColor="@color/texto_principal"
             android:textSize="14sp"
             android:layout_marginTop="2dp" />
     </LinearLayout>
@@ -65,7 +65,7 @@
         android:layout_height="30dp"
         android:gravity="center"
         android:text="✕"
-        android:textColor="@color/gris"
+        android:textColor="@color/texto_secundario"
         android:textSize="14sp"
         android:visibility="gone" />
 </LinearLayout>

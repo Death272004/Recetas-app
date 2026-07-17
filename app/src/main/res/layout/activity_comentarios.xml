@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/gris_claro">
+    android:background="@color/fondo_pantalla">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="‹"
             android:textColor="@color/naranja"
-            android:backgroundTint="@color/blanco"
+            android:backgroundTint="@color/superficie"
             android:textSize="18sp"
             android:paddingStart="14dp"
             android:paddingEnd="14dp" />
@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Aun no hay comentarios. Se el primero en comentar."
-        android:textColor="@color/gris"
+        android:textColor="@color/texto_secundario"
         android:textSize="15sp"
         android:gravity="center"
         android:padding="32dp"
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/blanco"
+        android:background="@color/superficie"
         android:padding="10dp"
         android:elevation="8dp"
         android:gravity="center_vertical">
@@ -73,7 +73,7 @@
             android:hint="Escribe un comentario..."
             android:inputType="textMultiLine"
             android:padding="10dp"
-            android:textColor="@color/negro"
+            android:textColor="@color/texto_principal"
             android:textSize="14sp"
             android:layout_marginEnd="8dp" />
 

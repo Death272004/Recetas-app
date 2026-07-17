@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Titulo receta"
-            android:textColor="@color/negro"
+            android:textColor="@color/texto_principal"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3 ingredientes"
-            android:textColor="@color/gris"
+            android:textColor="@color/texto_secundario"
             android:textSize="13sp"
             android:layout_marginTop="2dp" />
 

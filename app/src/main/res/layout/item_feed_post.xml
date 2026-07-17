@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Usuario"
-                android:textColor="@color/negro"
+                android:textColor="@color/texto_principal"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hace un momento"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
@@ -60,7 +60,7 @@
         android:paddingEnd="12dp"
         android:paddingBottom="8dp"
         android:text="Nombre de la receta"
-        android:textColor="@color/negro"
+        android:textColor="@color/texto_principal"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -98,7 +98,7 @@
             android:layout_height="40dp"
             android:background="@android:color/transparent"
             android:text="💬  Comentar"
-            android:textColor="@color/gris"
+            android:textColor="@color/texto_secundario"
             android:textSize="13sp" />
 
         <Button
@@ -107,7 +107,7 @@
             android:layout_height="40dp"
             android:background="@android:color/transparent"
             android:text="↗  Compartir"
-            android:textColor="@color/gris"
+            android:textColor="@color/texto_secundario"
             android:textSize="13sp" />
     </LinearLayout>
 

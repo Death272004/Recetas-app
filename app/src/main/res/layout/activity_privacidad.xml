@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/gris_claro">
+    android:background="@color/fondo_pantalla">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="‹"
             android:textColor="@color/naranja"
-            android:backgroundTint="@color/blanco"
+            android:backgroundTint="@color/superficie"
             android:textSize="18sp"
             android:paddingStart="14dp"
             android:paddingEnd="14dp" />
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Visibilidad"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
@@ -73,7 +73,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Perfil publico"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -81,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Otros usuarios pueden ver tu nombre y recetas"
-                        android:textColor="@color/gris"
+                        android:textColor="@color/texto_secundario"
                         android:textSize="12sp"
                         android:layout_marginTop="2dp" />
                 </LinearLayout>
@@ -114,7 +114,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Mostrar favoritos"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/texto_principal"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -122,7 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Permite que otros vean tus recetas favoritas"
-                        android:textColor="@color/gris"
+                        android:textColor="@color/texto_secundario"
                         android:textSize="12sp"
                         android:layout_marginTop="2dp" />
                 </LinearLayout>
@@ -140,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Datos y seguridad"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
@@ -157,7 +157,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🔒  Tu correo es privado"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/texto_principal"
                     android:textSize="14sp"
                     android:layout_marginBottom="8dp" />
 
@@ -165,7 +165,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🔒  Tu contrasena esta almacenada de forma segura"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/texto_principal"
                     android:textSize="14sp"
                     android:layout_marginBottom="8dp" />
 
@@ -173,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🔒  Tu lista de compras es privada"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/texto_principal"
                     android:textSize="14sp" />
             </LinearLayout>
 

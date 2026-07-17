@@ -74,7 +74,17 @@
             android:text="Salir"
             android:textSize="12sp"
             android:textColor="@color/naranja"
-            android:backgroundTint="@color/blanco" />
+            android:backgroundTint="@color/superficie" />
+
+        <Button
+            android:id="@+id/btnTema"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Oscuro"
+            android:textSize="12sp"
+            android:textColor="@color/naranja"
+            android:backgroundTint="@color/superficie" />
     </LinearLayout>
 
     <ScrollView
@@ -93,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Busca recetas con tus ingredientes"
-                android:textColor="@color/negro"
+                android:textColor="@color/texto_principal"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="6dp" />
@@ -102,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ingresa los ingredientes que tienes (separados por coma)"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="13sp"
                 android:layout_marginBottom="8dp" />
 
@@ -123,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Solo recetas economicas"
-                android:textColor="@color/negro"
+                android:textColor="@color/texto_principal"
                 android:textSize="14sp"
                 android:layout_marginBottom="6dp" />
 
@@ -142,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Recetas recomendadas de bajo presupuesto"
-                android:textColor="@color/negro"
+                android:textColor="@color/texto_principal"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp" />
@@ -165,7 +175,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:orientation="horizontal"
-            android:background="@color/blanco"
+            android:background="@color/superficie"
             android:elevation="8dp"
             android:paddingTop="10dp"
             android:paddingBottom="8dp"
