@@ -54,9 +54,12 @@ class FeedAdapter(
             holder.binding.btnLike.setTextColor(ctx.getColor(R.color.gris))
         }
         holder.binding.txtLikes.text = if (post.likes == 1) "1 Me gusta" else "${post.likes} Me gusta"
-
-        val comentarioText = if (post.comentarios > 0) "💬  ${post.comentarios}" else "💬  Comentar"
-        holder.binding.btnComentar.text = comentarioText
+        holder.binding.btnComentar.text = "💬"
+        holder.binding.btnComentar.contentDescription = if (post.comentarios > 0) {
+            post.comentarios.toString() + " comentarios"
+        } else {
+            "Comentar"
+        }
 
         holder.binding.root.setOnClickListener { alTocar(post) }
         holder.binding.btnLike.setOnClickListener { alLike(post) }
