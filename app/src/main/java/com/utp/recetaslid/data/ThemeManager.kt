@@ -21,15 +21,19 @@ object ThemeManager {
 
     fun alternarModo(context: Context): Boolean {
         val nuevoModoOscuro = !esModoOscuro(context)
+        establecerModo(context, nuevoModoOscuro)
+        return nuevoModoOscuro
+    }
+
+    fun establecerModo(context: Context, modoOscuro: Boolean) {
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
             .edit()
-            .putBoolean(KEY_MODO_OSCURO, nuevoModoOscuro)
+            .putBoolean(KEY_MODO_OSCURO, modoOscuro)
             .apply()
 
         AppCompatDelegate.setDefaultNightMode(
-            if (nuevoModoOscuro) AppCompatDelegate.MODE_NIGHT_YES
+            if (modoOscuro) AppCompatDelegate.MODE_NIGHT_YES
             else AppCompatDelegate.MODE_NIGHT_NO
         )
-        return nuevoModoOscuro
     }
 }

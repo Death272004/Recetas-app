@@ -47,22 +47,22 @@ class FeedAdapter(
             if (hayFoto) ImageView.ScaleType.CENTER_CROP else ImageView.ScaleType.CENTER_INSIDE
 
         if (post.isLiked) {
-            holder.binding.btnLike.text = "♥  ${post.likes}"
+            holder.binding.btnLike.text = "♥"
             holder.binding.btnLike.setTextColor(ctx.getColor(R.color.naranja))
         } else {
-            holder.binding.btnLike.text = "♡  ${post.likes}"
+            holder.binding.btnLike.text = "♡"
             holder.binding.btnLike.setTextColor(ctx.getColor(R.color.gris))
         }
+        holder.binding.txtLikes.text = if (post.likes == 1) "1 Me gusta" else "${post.likes} Me gusta"
 
         val comentarioText = if (post.comentarios > 0) "💬  ${post.comentarios}" else "💬  Comentar"
         holder.binding.btnComentar.text = comentarioText
-        holder.binding.btnVerLikes.text = if (post.likes == 0) "👥  Likes" else "👥  Ver likes"
 
         holder.binding.root.setOnClickListener { alTocar(post) }
         holder.binding.btnLike.setOnClickListener { alLike(post) }
         holder.binding.btnComentar.setOnClickListener { alComentar(post) }
         holder.binding.btnCompartir.setOnClickListener { alCompartir(post) }
-        holder.binding.btnVerLikes.setOnClickListener { alVerLikes(post) }
+        holder.binding.txtLikes.setOnClickListener { alVerLikes(post) }
         holder.binding.txtUserName.setOnClickListener { alTocarUsuario(post) }
         holder.binding.txtAvatar.setOnClickListener { alTocarUsuario(post) }
         holder.binding.imgAvatar.setOnClickListener { alTocarUsuario(post) }

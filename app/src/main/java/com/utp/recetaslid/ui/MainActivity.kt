@@ -31,7 +31,9 @@ class MainActivity : AppCompatActivity() {
         actualizarCabecera()
         binding.imgFotoPerfil.clipToOutline = true
         binding.txtInicialPerfil.clipToOutline = true
-        binding.btnTema.text = if (ThemeManager.esModoOscuro(this)) "Claro" else "Oscuro"
+        val modoOscuro = ThemeManager.esModoOscuro(this)
+        binding.switchTema.isChecked = modoOscuro
+        binding.txtTema.text = if (modoOscuro) "Oscuro" else "Claro"
 
         binding.btnSalir.setOnClickListener {
             if (esInvitado) {
@@ -45,12 +47,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnTema.setOnClickListener {
-            val modoOscuroActivo = ThemeManager.alternarModo(this)
-            binding.btnTema.text = if (modoOscuroActivo) "Claro" else "Oscuro"
+        binding.switchTema.setOnCheckedChangeListener { _, activo ->
+            ThemeManager.establecerModo(this, activo)
+            binding.txtTema.text = if (activo) "Oscuro" else "Claro"
             Toast.makeText(
                 this,
-                if (modoOscuroActivo) "Modo oscuro activado" else "Modo claro activado",
+                if (activo) "Modo oscuro activado" else "Modo claro activado",
                 Toast.LENGTH_SHORT
             ).show()
         }

@@ -98,13 +98,28 @@
 
         <Button
             android:id="@+id/btnLike"
+            android:layout_width="44dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="0dp"
+            android:text="♥"
+            android:textColor="@color/naranja"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtLikes"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:text="♥  0"
-            android:textColor="@color/naranja"
-            android:textSize="14sp"
+            android:gravity="center_vertical"
+            android:paddingStart="4dp"
+            android:paddingEnd="8dp"
+            android:text="0 Me gusta"
+            android:textColor="@color/texto_principal"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
         <Button
@@ -114,16 +129,6 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:text="💬  Comentar"
-            android:textColor="@color/texto_secundario"
-            android:textSize="13sp" />
-
-        <Button
-            android:id="@+id/btnVerLikes"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:text="👥  Likes"
             android:textColor="@color/texto_secundario"
             android:textSize="13sp" />
 
