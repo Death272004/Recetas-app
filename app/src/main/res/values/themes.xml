@@ -9,6 +9,10 @@
         <item name="colorOnSecondary">@color/blanco</item>
         <item name="android:statusBarColor">@color/naranja_oscuro</item>
         <item name="android:windowBackground">@color/fondo_pantalla</item>
+        <item name="android:textColorPrimary">@color/texto_principal</item>
+        <item name="android:textColorSecondary">@color/texto_secundario</item>
+        <item name="android:textColorHint">@color/texto_secundario</item>
+        <item name="android:editTextColor">@color/texto_principal</item>
     </style>
     <style name="Theme.RecetasLID.Splash" parent="Theme.RecetasLID">
         <item name="android:windowBackground">@color/negro</item>

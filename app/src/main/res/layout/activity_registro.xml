@@ -57,6 +57,8 @@
                 android:layout_marginBottom="20dp" />
 
             <EditText
+                android:textColorHint="@color/texto_secundario"
+                android:textColor="@color/texto_principal"
                 android:id="@+id/edtNombre"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -68,6 +70,8 @@
                 android:layout_marginBottom="12dp" />
 
             <EditText
+                android:textColorHint="@color/texto_secundario"
+                android:textColor="@color/texto_principal"
                 android:id="@+id/edtCorreo"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -79,6 +83,8 @@
                 android:layout_marginBottom="12dp" />
 
             <EditText
+                android:textColorHint="@color/texto_secundario"
+                android:textColor="@color/texto_principal"
                 android:id="@+id/edtClave"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -90,6 +96,8 @@
                 android:layout_marginBottom="12dp" />
 
             <EditText
+                android:textColorHint="@color/texto_secundario"
+                android:textColor="@color/texto_principal"
                 android:id="@+id/edtConfirmar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -128,6 +136,8 @@
                 android:layout_marginBottom="12dp" />
 
             <EditText
+                android:textColorHint="@color/texto_secundario"
+                android:textColor="@color/texto_principal"
                 android:id="@+id/edtRespuesta"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

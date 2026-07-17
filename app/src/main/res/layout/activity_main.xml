@@ -134,6 +134,8 @@
                 android:layout_marginBottom="8dp" />
 
             <EditText
+                android:textColorHint="@color/texto_secundario"
+                android:textColor="@color/texto_principal"
                 android:id="@+id/edtIngredientes"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

@@ -80,6 +80,8 @@
                 android:layout_marginBottom="18dp" />
 
             <EditText
+                android:textColorHint="@color/texto_secundario"
+                android:textColor="@color/texto_principal"
                 android:id="@+id/edtTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -90,6 +92,8 @@
                 android:layout_marginBottom="12dp" />
 
             <EditText
+                android:textColorHint="@color/texto_secundario"
+                android:textColor="@color/texto_principal"
                 android:id="@+id/edtIngredientes"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -100,6 +104,8 @@
                 android:layout_marginBottom="12dp" />
 
             <EditText
+                android:textColorHint="@color/texto_secundario"
+                android:textColor="@color/texto_principal"
                 android:id="@+id/edtTiempo"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -111,6 +117,8 @@
                 android:layout_marginBottom="12dp" />
 
             <EditText
+                android:textColorHint="@color/texto_secundario"
+                android:textColor="@color/texto_principal"
                 android:id="@+id/edtCosto"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -122,6 +130,8 @@
                 android:layout_marginBottom="12dp" />
 
             <EditText
+                android:textColorHint="@color/texto_secundario"
+                android:textColor="@color/texto_principal"
                 android:id="@+id/edtPasos"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
@@ -133,6 +143,8 @@
                 android:layout_marginBottom="12dp" />
 
             <EditText
+                android:textColorHint="@color/texto_secundario"
+                android:textColor="@color/texto_principal"
                 android:id="@+id/edtVideoUrl"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
