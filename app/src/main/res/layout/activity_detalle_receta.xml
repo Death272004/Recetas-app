@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ingredientes"
-                android:textColor="@color/negro"
+                android:textColor="@color/texto_principal"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Lista de ingredientes"
-                android:textColor="@color/negro"
+                android:textColor="@color/texto_principal"
                 android:textSize="14sp"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="16dp" />
@@ -88,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Preparacion"
-                android:textColor="@color/negro"
+                android:textColor="@color/texto_principal"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pasos"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="14sp"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="20dp" />
@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Video tutorial"
-                android:textColor="@color/negro"
+                android:textColor="@color/texto_principal"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
@@ -116,7 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Video no disponible para esta receta"
-                android:textColor="@color/gris"
+                android:textColor="@color/texto_secundario"
                 android:textSize="13sp"
                 android:visibility="gone"
                 android:layout_marginBottom="8dp" />
