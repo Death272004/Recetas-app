@@ -67,6 +67,12 @@ class FeedActivity : AppCompatActivity() {
                 }
                 startActivity(Intent.createChooser(shareIntent, "Compartir receta"))
             },
+            alVerLikes = { post ->
+                val i = Intent(this, LikesUsuariosActivity::class.java)
+                i.putExtra("recetaId", post.recetaId)
+                i.putExtra("recetaTitulo", post.recipeTitle)
+                startActivity(i)
+            },
             alTocarUsuario = { post ->
                 if (post.autorId != 0) {
                     val i = Intent(this, PerfilPublicoActivity::class.java)
@@ -95,13 +101,14 @@ class FeedActivity : AppCompatActivity() {
         val recetas = db.listarRecetas()
         val userId = sesion.getUsuarioId()
         val posts = recetas.map { r ->
-            val autor = if (r.autorId == 0) "RECETAS LID"
-            else db.obtenerUsuario(r.autorId)?.nombre ?: "Usuario"
+            val usuarioAutor = if (r.autorId == 0) null else db.obtenerUsuario(r.autorId)
+            val autor = if (r.autorId == 0) "RECETAS LID" else usuarioAutor?.nombre ?: "Usuario"
             FeedPost(
                 recetaId = r.id,
                 autorId = r.autorId,
                 userName = autor,
-                userInitial = autor.first().uppercase(),
+                userInitial = autor.firstOrNull()?.uppercase() ?: "?",
+                userPhoto = usuarioAutor?.foto ?: "",
                 recipeTitle = r.titulo,
                 imagen = r.imagen,
                 likes = db.contarLikesReceta(r.id),

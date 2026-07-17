@@ -46,17 +46,31 @@
         android:paddingBottom="24dp"
         android:gravity="center">
 
-        <TextView
-            android:id="@+id/txtAvatarGrande"
+        <FrameLayout
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/bg_avatar"
-            android:gravity="center"
-            android:textColor="@color/blanco"
-            android:textSize="32sp"
-            android:textStyle="bold"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/txtAvatarGrande"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_avatar"
+                android:gravity="center"
+                android:textColor="@color/blanco"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imgAvatarGrande"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_avatar"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:contentDescription="Foto de perfil" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/txtNombrePublico"

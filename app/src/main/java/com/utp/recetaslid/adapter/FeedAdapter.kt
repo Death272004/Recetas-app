@@ -1,6 +1,7 @@
 package com.utp.recetaslid.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ class FeedAdapter(
     private val alLike: (FeedPost) -> Unit,
     private val alComentar: (FeedPost) -> Unit,
     private val alCompartir: (FeedPost) -> Unit,
+    private val alVerLikes: (FeedPost) -> Unit,
     private val alTocarUsuario: (FeedPost) -> Unit
 ) : RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
 
@@ -31,6 +33,10 @@ class FeedAdapter(
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
         val post = posts[position]
         holder.binding.txtAvatar.text = post.userInitial
+        holder.binding.imgAvatar.clipToOutline = true
+        val hayFotoPerfil = ImagenUtil.mostrar(holder.binding.imgAvatar, post.userPhoto, redondeado = true)
+        holder.binding.imgAvatar.visibility = if (hayFotoPerfil) View.VISIBLE else View.GONE
+        holder.binding.txtAvatar.visibility = if (hayFotoPerfil) View.GONE else View.VISIBLE
         holder.binding.txtUserName.text = post.userName
         holder.binding.txtTimeAgo.text = "Publicado"
         holder.binding.txtRecipeTitle.text = post.recipeTitle
@@ -50,13 +56,16 @@ class FeedAdapter(
 
         val comentarioText = if (post.comentarios > 0) "💬  ${post.comentarios}" else "💬  Comentar"
         holder.binding.btnComentar.text = comentarioText
+        holder.binding.btnVerLikes.text = if (post.likes == 0) "👥  Likes" else "👥  Ver likes"
 
         holder.binding.root.setOnClickListener { alTocar(post) }
         holder.binding.btnLike.setOnClickListener { alLike(post) }
         holder.binding.btnComentar.setOnClickListener { alComentar(post) }
         holder.binding.btnCompartir.setOnClickListener { alCompartir(post) }
+        holder.binding.btnVerLikes.setOnClickListener { alVerLikes(post) }
         holder.binding.txtUserName.setOnClickListener { alTocarUsuario(post) }
         holder.binding.txtAvatar.setOnClickListener { alTocarUsuario(post) }
+        holder.binding.imgAvatar.setOnClickListener { alTocarUsuario(post) }
     }
 
     override fun getItemCount(): Int = posts.size

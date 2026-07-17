@@ -366,6 +366,34 @@ class DBHelper(context: Context) :
         writableDatabase.update("usuarios", v, "id = ?", arrayOf(id.toString()))
     }
 
+    fun actualizarFotoPerfil(id: Int, foto: String) {
+        val v = ContentValues().apply { put("foto", foto) }
+        writableDatabase.update("usuarios", v, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun listarUsuariosQueDieronLike(recetaId: Int): List<Usuario> {
+        val lista = mutableListOf<Usuario>()
+        val c = readableDatabase.rawQuery(
+            "SELECT u.id, u.nombre, u.correo, u.clave, u.rol, u.estado, " +
+                "u.fechaRegistro, u.ultimoAcceso, u.foto " +
+                "FROM favoritos f INNER JOIN usuarios u ON f.usuarioId = u.id " +
+                "WHERE f.recetaId = ? ORDER BY u.nombre COLLATE NOCASE",
+            arrayOf(recetaId.toString())
+        )
+        while (c.moveToNext()) {
+            lista.add(
+                Usuario(
+                    c.getInt(0), c.getString(1), c.getString(2), c.getString(3),
+                    c.getString(4), c.getString(5) ?: "activo",
+                    c.getString(6) ?: "", c.getString(7) ?: "",
+                    c.getString(8) ?: ""
+                )
+            )
+        }
+        c.close()
+        return lista
+    }
+
     fun contarRecetasDeUsuario(autorId: Int): Int {
         val c = readableDatabase.rawQuery(
             "SELECT COUNT(*) FROM recetas WHERE autorId = ?", arrayOf(autorId.toString())

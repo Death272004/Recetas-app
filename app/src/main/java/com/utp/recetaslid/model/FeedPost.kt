@@ -5,6 +5,7 @@ data class FeedPost(
     val autorId: Int,
     val userName: String,
     val userInitial: String,
+    val userPhoto: String,
     val recipeTitle: String,
     val imagen: String,
     val likes: Int,

@@ -14,16 +14,30 @@
         android:padding="12dp"
         android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/txtAvatar"
+        <FrameLayout
             android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:background="@drawable/bg_avatar"
-            android:gravity="center"
-            android:textColor="@color/blanco"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:text="?" />
+            android:layout_height="42dp">
+
+            <TextView
+                android:id="@+id/txtAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_avatar"
+                android:gravity="center"
+                android:textColor="@color/blanco"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="?" />
+
+            <ImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_avatar"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:contentDescription="Foto de perfil" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -84,8 +98,9 @@
 
         <Button
             android:id="@+id/btnLike"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
             android:text="♥  0"
             android:textColor="@color/naranja"
@@ -94,17 +109,29 @@
 
         <Button
             android:id="@+id/btnComentar"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
             android:text="💬  Comentar"
             android:textColor="@color/texto_secundario"
             android:textSize="13sp" />
 
         <Button
-            android:id="@+id/btnCompartir"
-            android:layout_width="wrap_content"
+            android:id="@+id/btnVerLikes"
+            android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="👥  Likes"
+            android:textColor="@color/texto_secundario"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btnCompartir"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
             android:text="↗  Compartir"
             android:textColor="@color/texto_secundario"

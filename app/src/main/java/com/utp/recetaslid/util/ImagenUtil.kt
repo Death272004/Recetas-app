@@ -1,5 +1,6 @@
 package com.utp.recetaslid.util
 
+import android.content.Context
 import android.net.Uri
 import android.widget.ImageView
 import com.utp.recetaslid.R
@@ -39,5 +40,23 @@ object ImagenUtil {
         imageView.setPadding(pad, pad, pad, pad)
         imageView.setBackgroundResource(fondoVacio)
         return false
+    }
+
+    fun guardarFotoPerfil(context: Context, uri: Uri, usuarioId: Int): String? {
+        return try {
+            val dir = File(context.filesDir, "profile_photos")
+            if (!dir.exists()) dir.mkdirs()
+            val destino = File(dir, "usuario_${usuarioId}.jpg")
+            context.contentResolver.openInputStream(uri)?.use { input ->
+                destino.outputStream().use { output -> input.copyTo(output) }
+            } ?: return null
+            destino.absolutePath
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    fun eliminarArchivoLocal(ruta: String) {
+        if (ruta.startsWith("/")) File(ruta).takeIf { it.exists() }?.delete()
     }
 }

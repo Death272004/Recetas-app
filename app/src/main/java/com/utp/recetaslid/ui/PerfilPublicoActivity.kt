@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.utp.recetaslid.adapter.RecetaAdapter
 import com.utp.recetaslid.data.DBHelper
 import com.utp.recetaslid.databinding.ActivityPerfilPublicoBinding
+import com.utp.recetaslid.util.ImagenUtil
 
 class PerfilPublicoActivity : AppCompatActivity() {
 
@@ -30,7 +31,13 @@ class PerfilPublicoActivity : AppCompatActivity() {
 
         binding.txtTituloPerfil.text = usuario.nombre
         binding.txtNombrePublico.text = usuario.nombre
-        binding.txtAvatarGrande.text = usuario.nombre.first().uppercase()
+        binding.imgAvatarGrande.clipToOutline = true
+        binding.txtAvatarGrande.clipToOutline = true
+        val hayFoto = usuario.foto.isNotEmpty() &&
+            ImagenUtil.mostrar(binding.imgAvatarGrande, usuario.foto, redondeado = true)
+        binding.imgAvatarGrande.visibility = if (hayFoto) View.VISIBLE else View.GONE
+        binding.txtAvatarGrande.visibility = if (hayFoto) View.GONE else View.VISIBLE
+        if (!hayFoto) binding.txtAvatarGrande.text = usuario.nombre.firstOrNull()?.uppercase() ?: "?"
 
         val recetas = db.listarRecetasDeUsuario(usuarioId)
         binding.txtRecetasPublico.text = recetas.size.toString()

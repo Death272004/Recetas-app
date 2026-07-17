@@ -39,6 +39,7 @@
         <activity android:name=".ui.EditarPerfilActivity" android:exported="false" />
         <activity android:name=".ui.MiActividadActivity" android:exported="false" />
         <activity android:name=".ui.ComentariosActivity" android:exported="false" />
+        <activity android:name=".ui.LikesUsuariosActivity" android:exported="false" />
         <activity android:name=".ui.PerfilPublicoActivity" android:exported="false" />
         <activity android:name=".ui.NotificacionesActivity" android:exported="false" />
         <activity android:name=".ui.PrivacidadActivity" android:exported="false" />
