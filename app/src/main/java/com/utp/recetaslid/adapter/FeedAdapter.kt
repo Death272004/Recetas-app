@@ -1,6 +1,5 @@
 package com.utp.recetaslid.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -8,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.utp.recetaslid.R
 import com.utp.recetaslid.databinding.ItemFeedPostBinding
 import com.utp.recetaslid.model.FeedPost
+import com.utp.recetaslid.util.ImagenUtil
 
 class FeedAdapter(
     private var posts: List<FeedPost>,
@@ -36,22 +36,9 @@ class FeedAdapter(
         holder.binding.txtRecipeTitle.text = post.recipeTitle
 
         val ctx = holder.itemView.context
-        val resId = if (post.imagen.isNotEmpty())
-            ctx.resources.getIdentifier(post.imagen, "drawable", ctx.packageName)
-        else 0
-
-        if (resId != 0) {
-            holder.binding.imgPost.setImageResource(resId)
-            holder.binding.imgPost.scaleType = ImageView.ScaleType.CENTER_CROP
-            holder.binding.imgPost.setPadding(0, 0, 0, 0)
-            holder.binding.imgPost.setBackgroundColor(Color.TRANSPARENT)
-        } else {
-            val pad = (40 * ctx.resources.displayMetrics.density).toInt()
-            holder.binding.imgPost.setImageResource(R.drawable.ic_receta)
-            holder.binding.imgPost.scaleType = ImageView.ScaleType.CENTER_INSIDE
-            holder.binding.imgPost.setPadding(pad, pad, pad, pad)
-            holder.binding.imgPost.setBackgroundResource(R.color.naranja_suave)
-        }
+        val hayFoto = ImagenUtil.mostrar(holder.binding.imgPost, post.imagen, paddingVacioDp = 40)
+        holder.binding.imgPost.scaleType =
+            if (hayFoto) ImageView.ScaleType.CENTER_CROP else ImageView.ScaleType.CENTER_INSIDE
 
         if (post.isLiked) {
             holder.binding.btnLike.text = "♥  ${post.likes}"

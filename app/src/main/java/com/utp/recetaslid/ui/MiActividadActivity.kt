@@ -30,7 +30,7 @@ class MiActividadActivity : AppCompatActivity() {
         adapter = RecetaAdapter(emptyList()) { receta ->
             AlertDialog.Builder(this)
                 .setTitle(receta.titulo)
-                .setItems(arrayOf("Ver detalle", "Eliminar")) { _, which ->
+                .setItems(arrayOf("Ver detalle", "Editar", "Eliminar")) { _, which ->
                     when (which) {
                         0 -> {
                             val i = Intent(this, DetalleRecetaActivity::class.java)
@@ -38,6 +38,12 @@ class MiActividadActivity : AppCompatActivity() {
                             startActivity(i)
                         }
                         1 -> {
+                            // Abrimos el formulario en modo edicion (RF-07)
+                            val i = Intent(this, CrearRecetaActivity::class.java)
+                            i.putExtra("recetaId", receta.id)
+                            startActivity(i)
+                        }
+                        2 -> {
                             AlertDialog.Builder(this)
                                 .setTitle("Eliminar receta")
                                 .setMessage("¿Seguro que quieres eliminar \"${receta.titulo}\"?")

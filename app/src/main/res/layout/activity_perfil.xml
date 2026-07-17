@@ -54,15 +54,32 @@
                 android:paddingBottom="24dp"
                 android:gravity="center">
 
-                <ImageView
-                    android:id="@+id/imgPerfilGrande"
+                <!-- Avatar: muestra la foto solo si la cuenta tiene una; si no, su inicial -->
+                <FrameLayout
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/foto_perfil_leo"
-                    android:scaleType="centerCrop"
-                    android:background="@drawable/bg_avatar"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="12dp" />
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:id="@+id/txtInicialPerfilGrande"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_avatar"
+                        android:gravity="center"
+                        android:textColor="@color/blanco"
+                        android:textSize="40sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/imgPerfilGrande"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:background="@drawable/bg_avatar"
+                        android:visibility="gone"
+                        android:contentDescription="Foto de perfil" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/txtNombrePerfil"

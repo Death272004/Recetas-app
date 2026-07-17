@@ -20,6 +20,7 @@
 
         <activity android:name=".ui.LoginActivity" android:exported="false" />
         <activity android:name=".ui.RegistroActivity" android:exported="false" />
+        <activity android:name=".ui.RecuperarClaveActivity" android:exported="false" />
         <activity android:name=".ui.MainActivity" android:exported="false" />
         <activity android:name=".ui.ResultadosActivity" android:exported="false" />
         <activity android:name=".ui.DetalleRecetaActivity" android:exported="false"
@@ -33,7 +34,6 @@
         <activity android:name=".ui.AdminComentariosActivity" android:exported="false" />
         <activity android:name=".ui.AdminLogsActivity" android:exported="false" />
         <activity android:name=".ui.FeedActivity" android:exported="false" />
-        <activity android:name=".ui.OtrosActivity" android:exported="false" />
         <activity android:name=".ui.PerfilActivity" android:exported="false" />
         <activity android:name=".ui.EditarPerfilActivity" android:exported="false" />
         <activity android:name=".ui.MiActividadActivity" android:exported="false" />

@@ -46,6 +46,16 @@
             android:orientation="vertical"
             android:padding="18dp">
 
+            <ImageView
+                android:id="@+id/imgRecetaDetalle"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_imagen_receta"
+                android:src="@drawable/ic_receta"
+                android:contentDescription="@string/app_name"
+                android:layout_marginBottom="16dp" />
+
             <TextView
                 android:id="@+id/txtMeta"
                 android:layout_width="wrap_content"
@@ -115,6 +125,7 @@
                 android:id="@+id/videoContainer"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
+                android:descendantFocusability="beforeDescendants"
                 android:background="#000000"
                 android:visibility="gone"
                 android:layout_marginBottom="12dp">

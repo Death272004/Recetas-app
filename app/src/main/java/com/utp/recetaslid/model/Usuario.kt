@@ -8,5 +8,7 @@ data class Usuario(
     val rol: String,
     val estado: String = "activo",
     val fechaRegistro: String = "",
-    val ultimoAcceso: String = ""
+    val ultimoAcceso: String = "",
+    // Nombre del drawable o ruta de la foto de perfil. Vacio = sin foto (se usa la inicial)
+    val foto: String = ""
 )

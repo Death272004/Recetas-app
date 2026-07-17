@@ -29,6 +29,7 @@
                 android:paddingEnd="14dp" />
 
             <TextView
+                android:id="@+id/txtTituloPantalla"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -44,6 +45,39 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="18dp">
+
+            <ImageView
+                android:id="@+id/imgReceta"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_imagen_receta"
+                android:src="@drawable/ic_receta"
+                android:contentDescription="@string/app_name"
+                android:layout_marginBottom="8dp" />
+
+            <Button
+                android:id="@+id/btnAdjuntarImagen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_boton_oscuro"
+                android:text="Adjuntar imagen"
+                android:textAllCaps="false"
+                android:textColor="@color/blanco"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Sugerido: formato JPG, cuadrada (1:1), 240x240"
+                android:textColor="@color/gris"
+                android:textSize="12sp"
+                android:layout_marginBottom="18dp" />
 
             <EditText
                 android:id="@+id/edtTitulo"

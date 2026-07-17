@@ -2,7 +2,6 @@ package com.utp.recetaslid.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.utp.recetaslid.adapter.FeedAdapter
@@ -33,13 +32,23 @@ class FeedActivity : AppCompatActivity() {
         adapter = FeedAdapter(
             emptyList(),
             alTocar = { post ->
-                val i = Intent(this, DetalleRecetaActivity::class.java)
-                i.putExtra("recetaId", post.recetaId)
-                startActivity(i)
+                // El invitado debe iniciar sesion para abrir el detalle
+                if (!sesion.haySesion()) {
+                    LoginRapido.mostrar(this, "Entra a tu cuenta para ver esta receta") {
+                        esInvitado = false
+                        verDetalle(post.recetaId)
+                    }
+                } else {
+                    verDetalle(post.recetaId)
+                }
             },
             alLike = { post ->
-                if (esInvitado) {
-                    Toast.makeText(this, "Inicia sesion para dar like", Toast.LENGTH_SHORT).show()
+                if (!sesion.haySesion()) {
+                    LoginRapido.mostrar(this, "Entra a tu cuenta para dar like") {
+                        esInvitado = false
+                        db.alternarFavorito(sesion.getUsuarioId(), post.recetaId)
+                        cargarFeed()
+                    }
                     return@FeedAdapter
                 }
                 db.alternarFavorito(sesion.getUsuarioId(), post.recetaId)
@@ -70,8 +79,15 @@ class FeedActivity : AppCompatActivity() {
         binding.recyclerFeed.adapter = adapter
     }
 
+    private fun verDetalle(recetaId: Int) {
+        val i = Intent(this, DetalleRecetaActivity::class.java)
+        i.putExtra("recetaId", recetaId)
+        startActivity(i)
+    }
+
     override fun onResume() {
         super.onResume()
+        esInvitado = !sesion.haySesion()
         cargarFeed()
     }
 

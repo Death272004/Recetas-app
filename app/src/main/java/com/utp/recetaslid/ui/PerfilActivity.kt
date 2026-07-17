@@ -2,11 +2,13 @@ package com.utp.recetaslid.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.utp.recetaslid.data.DBHelper
 import com.utp.recetaslid.data.SessionManager
 import com.utp.recetaslid.databinding.ActivityPerfilBinding
+import com.utp.recetaslid.util.ImagenUtil
 
 class PerfilActivity : AppCompatActivity() {
 
@@ -29,6 +31,7 @@ class PerfilActivity : AppCompatActivity() {
         }
 
         binding.imgPerfilGrande.clipToOutline = true
+        binding.txtInicialPerfilGrande.clipToOutline = true
         binding.btnVolver.setOnClickListener { finish() }
 
         binding.menuEditarPerfil.setOnClickListener {
@@ -62,9 +65,24 @@ class PerfilActivity : AppCompatActivity() {
     private fun cargarDatos() {
         val userId = sesion.getUsuarioId()
         binding.txtNombrePerfil.text = sesion.getNombre()
+        mostrarAvatar(userId)
         binding.txtRolPerfil.text = "${sesion.getRol().replaceFirstChar { it.uppercase() }} · RecetasLID"
         binding.txtRecetaCount.text = db.contarRecetasDeUsuario(userId).toString()
         binding.txtFavoritoCount.text = db.contarFavoritosDeUsuario(userId).toString()
         binding.txtComprasCount.text = db.contarComprasDeUsuario(userId).toString()
+    }
+
+    // Solo las cuentas que tienen una foto guardada la muestran.
+    // El resto ve la inicial de su nombre, igual que en el feed y en los perfiles publicos.
+    private fun mostrarAvatar(userId: Int) {
+        val usuario = db.obtenerUsuario(userId)
+        val foto = usuario?.foto ?: ""
+        val nombre = usuario?.nombre ?: sesion.getNombre()
+        // Solo hay foto si la cuenta tiene una guardada y ademas se pudo cargar
+        val hayFoto = foto.isNotEmpty() &&
+            ImagenUtil.mostrar(binding.imgPerfilGrande, foto, redondeado = true)
+        binding.imgPerfilGrande.visibility = if (hayFoto) View.VISIBLE else View.GONE
+        binding.txtInicialPerfilGrande.visibility = if (hayFoto) View.GONE else View.VISIBLE
+        if (!hayFoto) binding.txtInicialPerfilGrande.text = nombre.firstOrNull()?.uppercase() ?: "?"
     }
 }

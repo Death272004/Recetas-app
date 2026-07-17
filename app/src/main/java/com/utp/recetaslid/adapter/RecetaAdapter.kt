@@ -1,12 +1,11 @@
 package com.utp.recetaslid.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.utp.recetaslid.R
 import com.utp.recetaslid.databinding.ItemRecetaBinding
 import com.utp.recetaslid.model.Receta
+import com.utp.recetaslid.util.ImagenUtil
 
 // Adaptador para mostrar la lista de recetas en un RecyclerView
 class RecetaAdapter(
@@ -32,22 +31,8 @@ class RecetaAdapter(
         holder.binding.txtCosto.text = "B/. ${"%.2f".format(receta.costo)}"
         holder.binding.root.setOnClickListener { alTocar(receta) }
 
-        // Carga la imagen del plato si existe, o muestra el icono generico
-        val ctx = holder.itemView.context
-        val resId = if (receta.imagen.isNotEmpty())
-            ctx.resources.getIdentifier(receta.imagen, "drawable", ctx.packageName)
-        else 0
-
-        if (resId != 0) {
-            holder.binding.imgReceta.setImageResource(resId)
-            holder.binding.imgReceta.setPadding(0, 0, 0, 0)
-            holder.binding.imgReceta.setBackgroundColor(Color.TRANSPARENT)
-        } else {
-            val pad = (10 * ctx.resources.displayMetrics.density).toInt()
-            holder.binding.imgReceta.setImageResource(R.drawable.ic_receta)
-            holder.binding.imgReceta.setPadding(pad, pad, pad, pad)
-            holder.binding.imgReceta.setBackgroundResource(R.color.naranja_suave)
-        }
+        // Carga la imagen del plato si existe (drawable o foto propia), o muestra el icono generico
+        ImagenUtil.mostrar(holder.binding.imgReceta, receta.imagen)
     }
 
     override fun getItemCount(): Int = lista.size

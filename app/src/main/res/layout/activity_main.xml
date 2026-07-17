@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -13,14 +14,35 @@
         android:padding="16dp"
         android:gravity="center_vertical">
 
-        <ImageView
-            android:id="@+id/imgFotoPerfil"
+        <!-- Avatar: muestra la foto solo si la cuenta tiene una; si no, su inicial -->
+        <FrameLayout
+            android:id="@+id/contenedorFotoPerfil"
             android:layout_width="44dp"
             android:layout_height="44dp"
-            android:src="@drawable/foto_perfil_leo"
-            android:scaleType="centerCrop"
-            android:background="@drawable/bg_avatar"
-            android:layout_marginEnd="12dp" />
+            android:layout_marginEnd="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless">
+
+            <TextView
+                android:id="@+id/txtInicialPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_avatar"
+                android:gravity="center"
+                android:textColor="@color/blanco"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imgFotoPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_avatar"
+                android:visibility="gone"
+                android:contentDescription="Mi perfil" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -95,6 +117,16 @@
                 android:paddingEnd="14dp"
                 android:layout_marginBottom="10dp" />
 
+            <!-- RF-05: filtro de recetas economicas / de pocos ingredientes -->
+            <CheckBox
+                android:id="@+id/checkEconomicas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Solo recetas economicas"
+                android:textColor="@color/negro"
+                android:textSize="14sp"
+                android:layout_marginBottom="6dp" />
+
             <Button
                 android:id="@+id/btnBuscar"
                 android:layout_width="match_parent"
@@ -123,52 +155,146 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Barra de navegacion inferior: Home | Feed | Favoritos | Otros -->
-    <LinearLayout
+    <!-- Barra de navegacion inferior: Home | Feed | (Crear) | Favoritos | Otros -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/blanco"
-        android:weightSum="4">
+        android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/navHome"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Home"
-            android:textSize="11sp"
-            android:textColor="@color/naranja"
-            android:backgroundTint="@color/blanco" />
+            android:layout_marginTop="22dp"
+            android:orientation="horizontal"
+            android:background="@color/blanco"
+            android:elevation="8dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="8dp"
+            android:weightSum="5">
 
-        <Button
-            android:id="@+id/navFeed"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Feed"
-            android:textSize="11sp"
-            android:textColor="@color/naranja"
-            android:backgroundTint="@color/blanco" />
+            <LinearLayout
+                android:id="@+id/navHome"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="4dp">
 
-        <Button
-            android:id="@+id/navFavoritos"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Favoritos"
-            android:textSize="11sp"
-            android:textColor="@color/naranja"
-            android:backgroundTint="@color/blanco" />
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/ic_nav_home"
+                    app:tint="@color/naranja" />
 
-        <Button
-            android:id="@+id/navOtros"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Otros"
-            android:textSize="11sp"
-            android:textColor="@color/naranja"
-            android:backgroundTint="@color/blanco" />
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Home"
+                    android:textSize="9sp"
+                    android:textColor="@color/naranja" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/navFeed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="4dp">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/ic_nav_feed"
+                    app:tint="@color/gris" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Feed"
+                    android:textSize="9sp"
+                    android:textColor="@color/gris" />
+            </LinearLayout>
+
+            <!-- Espacio reservado para el boton central de crear receta -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:id="@+id/navFavoritos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="4dp">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/ic_nav_favoritos"
+                    app:tint="@color/gris" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Favoritos"
+                    android:textSize="9sp"
+                    android:textColor="@color/gris" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/navCarrito"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="4dp">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/ic_nav_carrito"
+                    app:tint="@color/gris" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Carrito"
+                    android:textSize="9sp"
+                    android:textColor="@color/gris" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/navCrear"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center_horizontal|top"
+            android:elevation="10dp"
+            android:background="@drawable/bg_nav_add"
+            android:src="@drawable/ic_nav_add"
+            android:scaleType="center"
+            android:contentDescription="Crear receta" />
+    </FrameLayout>
 </LinearLayout>

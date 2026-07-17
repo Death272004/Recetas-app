@@ -1,5 +1,6 @@
 package com.utp.recetaslid.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
@@ -11,10 +12,12 @@ import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.utp.recetaslid.R
 import com.utp.recetaslid.data.DBHelper
 import com.utp.recetaslid.data.SessionManager
 import com.utp.recetaslid.databinding.ActivityDetalleRecetaBinding
 import com.utp.recetaslid.model.Receta
+import com.utp.recetaslid.util.ImagenUtil
 
 class DetalleRecetaActivity : AppCompatActivity() {
 
@@ -30,6 +33,7 @@ class DetalleRecetaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetalleRecetaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.imgRecetaDetalle.clipToOutline = true
 
         db = DBHelper(this)
         sesion = SessionManager(this)
@@ -95,6 +99,12 @@ class DetalleRecetaActivity : AppCompatActivity() {
         binding.txtTitulo.text = r.titulo
         binding.txtMeta.text = "B/. ${"%.2f".format(r.costo)} · ${r.tiempo} min"
 
+        // Carga la imagen del plato (drawable o foto propia) con esquinas redondeadas
+        ImagenUtil.mostrar(
+            binding.imgRecetaDetalle, r.imagen,
+            redondeado = true, fondoVacio = R.drawable.bg_imagen_receta, paddingVacioDp = 24
+        )
+
         val faltan = db.faltantes(r, ingredientesUsuario)
         val texto = StringBuilder()
         for (ing in r.listaIngredientes()) {
@@ -155,10 +165,43 @@ class DetalleRecetaActivity : AppCompatActivity() {
         }
     }
 
+    // Altura del recuadro segun lo que se muestre:
+    // un video incrustado usa proporcion 16:9, mientras que la pagina de YouTube
+    // necesita mucho mas alto para poder ver y deslizar la lista de resultados.
+    private val ALTO_VIDEO_DP = 220
+    private val ALTO_BUSQUEDA_DP = 520
+
+    // Cambia el alto del recuadro del video
+    private fun ajustarAltoVideo(dp: Int) {
+        val params = binding.videoContainer.layoutParams
+        params.height = (dp * resources.displayMetrics.density).toInt()
+        binding.videoContainer.layoutParams = params
+    }
+
+    // El WebView esta dentro de un ScrollView y, por defecto, el ScrollView se queda
+    // con los gestos verticales: por eso la pagina de YouTube no se podia deslizar.
+    // Con esto le pedimos al ScrollView que no intercepte el gesto mientras el dedo
+    // esta sobre el WebView, de modo que la lista de videos si se pueda recorrer.
+    @SuppressLint("ClickableViewAccessibility")
+    private fun permitirScrollDentroDelVideo(activar: Boolean) {
+        if (!activar) {
+            binding.webVideo.setOnTouchListener(null)
+            return
+        }
+        binding.webVideo.setOnTouchListener { v, _ ->
+            v.parent.requestDisallowInterceptTouchEvent(true)
+            false
+        }
+    }
+
     private fun cargarVideoEmbebido(videoId: String) {
         val webView = binding.webVideo
         val progress = binding.progressVideo
         progress.visibility = View.VISIBLE
+
+        // Un solo video: basta con la proporcion 16:9 y no hace falta desplazarse
+        ajustarAltoVideo(ALTO_VIDEO_DP)
+        permitirScrollDentroDelVideo(false)
 
         webView.settings.javaScriptEnabled = true
         webView.settings.mediaPlaybackRequiresUserGesture = false
@@ -196,6 +239,11 @@ class DetalleRecetaActivity : AppCompatActivity() {
         val webView = binding.webVideo
         val progress = binding.progressVideo
         progress.visibility = View.VISIBLE
+
+        // Aqui se abre la pagina de YouTube con la lista de resultados:
+        // le damos mas alto y habilitamos el deslizamiento dentro del recuadro
+        ajustarAltoVideo(ALTO_BUSQUEDA_DP)
+        permitirScrollDentroDelVideo(true)
 
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true

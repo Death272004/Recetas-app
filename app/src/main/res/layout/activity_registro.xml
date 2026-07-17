@@ -98,6 +98,44 @@
                 android:inputType="textPassword"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
+                android:layout_marginBottom="18dp" />
+
+            <!-- Pregunta de seguridad: se usa para recuperar la contrasena -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pregunta de seguridad"
+                android:textColor="@color/negro"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginBottom="2dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="La usaras si olvidas tu contrasena"
+                android:textColor="@color/gris"
+                android:textSize="12sp"
+                android:layout_marginBottom="8dp" />
+
+            <Spinner
+                android:id="@+id/spinnerPregunta"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_campo"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/edtRespuesta"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_campo"
+                android:hint="Tu respuesta"
+                android:inputType="text"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
                 android:layout_marginBottom="24dp" />
 
             <Button

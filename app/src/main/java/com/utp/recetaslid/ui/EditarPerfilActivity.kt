@@ -40,5 +40,39 @@ class EditarPerfilActivity : AppCompatActivity() {
             Toast.makeText(this, "Perfil actualizado", Toast.LENGTH_SHORT).show()
             finish()
         }
+
+        binding.btnCambiarClave.setOnClickListener { cambiarClave(userId) }
+    }
+
+    // Cambia la contrasena validando primero la actual (RNF-03)
+    private fun cambiarClave(userId: Int) {
+        val actual = binding.edtClaveActual.text.toString()
+        val nueva = binding.edtClaveNueva.text.toString()
+        val confirmar = binding.edtClaveConfirmar.text.toString()
+
+        if (actual.isEmpty() || nueva.isEmpty() || confirmar.isEmpty()) {
+            Toast.makeText(this, "Completa los tres campos de contrasena", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (nueva.length < 6) {
+            Toast.makeText(this, "La nueva contrasena debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (nueva != confirmar) {
+            Toast.makeText(this, "Las contrasenas nuevas no coinciden", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val cambiada = db.cambiarClave(userId, actual, nueva)
+        if (!cambiada) {
+            Toast.makeText(this, "La contrasena actual no es correcta", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Limpiamos los campos para no dejar las claves en pantalla
+        binding.edtClaveActual.setText("")
+        binding.edtClaveNueva.setText("")
+        binding.edtClaveConfirmar.setText("")
+        Toast.makeText(this, "Contrasena actualizada", Toast.LENGTH_SHORT).show()
     }
 }

@@ -24,6 +24,9 @@ class LoginActivity : AppCompatActivity() {
 
         binding.btnVolver.setOnClickListener { finish() }
         binding.btnEntrar.setOnClickListener { iniciarSesion() }
+        binding.txtOlvide.setOnClickListener {
+            startActivity(Intent(this, RecuperarClaveActivity::class.java))
+        }
         binding.txtIrRegistro.setOnClickListener {
             startActivity(Intent(this, RegistroActivity::class.java))
         }

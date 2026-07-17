@@ -10,7 +10,7 @@ import com.utp.recetaslid.model.Receta
 import com.utp.recetaslid.model.Usuario
 
 class DBHelper(context: Context) :
-    SQLiteOpenHelper(context, "recetas_lid.db", null, 4) {
+    SQLiteOpenHelper(context, "recetas_lid.db", null, 7) {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(
@@ -19,7 +19,10 @@ class DBHelper(context: Context) :
                 "nombre TEXT, correo TEXT UNIQUE, clave TEXT, rol TEXT, " +
                 "estado TEXT DEFAULT 'activo', " +
                 "fechaRegistro TEXT DEFAULT '', " +
-                "ultimoAcceso TEXT DEFAULT '')"
+                "ultimoAcceso TEXT DEFAULT '', " +
+                "pregunta TEXT DEFAULT '', " +
+                "respuesta TEXT DEFAULT '', " +
+                "foto TEXT DEFAULT '')"
         )
         db.execSQL(
             "CREATE TABLE recetas (" +
@@ -70,15 +73,22 @@ class DBHelper(context: Context) :
 
     // ---------------- USUARIOS ----------------
 
-    fun registrarUsuario(nombre: String, correo: String, clave: String): Boolean {
+    fun registrarUsuario(
+        nombre: String, correo: String, clave: String,
+        pregunta: String = "", respuesta: String = ""
+    ): Boolean {
         if (existeCorreo(correo)) return false
         val valores = ContentValues().apply {
             put("nombre", nombre)
             put("correo", correo)
-            put("clave", clave)
+            // Guardamos el hash de la clave, nunca la clave en texto plano (RNF-03)
+            put("clave", Seguridad.hashClave(clave))
             put("rol", "usuario")
             put("estado", "activo")
             put("fechaRegistro", System.currentTimeMillis().toString())
+            put("pregunta", pregunta)
+            // La respuesta tambien se guarda como hash (normalizada a minusculas)
+            put("respuesta", if (respuesta.isEmpty()) "" else Seguridad.hashClave(respuesta.trim().lowercase()))
         }
         val resultado = writableDatabase.insert("usuarios", null, valores)
         return resultado != -1L
@@ -94,9 +104,10 @@ class DBHelper(context: Context) :
     }
 
     fun login(correo: String, clave: String): Usuario? {
+        // Comparamos el hash de lo que escribio el usuario contra el hash guardado
         val c = readableDatabase.rawQuery(
             "SELECT id, nombre, correo, clave, rol, estado FROM usuarios WHERE correo = ? AND clave = ?",
-            arrayOf(correo, clave)
+            arrayOf(correo, Seguridad.hashClave(clave))
         )
         var usuario: Usuario? = null
         if (c.moveToFirst()) {
@@ -166,6 +177,20 @@ class DBHelper(context: Context) :
         if (c.moveToFirst()) r = cursorAReceta(c)
         c.close()
         return r
+    }
+
+    // Actualiza una receta existente (RF-07: editar receta propia)
+    fun actualizarReceta(r: Receta): Int {
+        val valores = ContentValues().apply {
+            put("titulo", r.titulo)
+            put("ingredientes", r.ingredientes)
+            put("pasos", r.pasos)
+            put("tiempo", r.tiempo)
+            put("costo", r.costo)
+            put("videoUrl", r.videoUrl)
+            put("imagen", r.imagen)
+        }
+        return writableDatabase.update("recetas", valores, "id = ?", arrayOf(r.id.toString()))
     }
 
     fun eliminarReceta(id: Int) {
@@ -307,15 +332,30 @@ class DBHelper(context: Context) :
         writableDatabase.delete("compras", "id = ?", arrayOf(id.toString()))
     }
 
+    // Marca todos los items de la lista de compras del usuario como comprados
+    fun marcarTodoComprado(usuarioId: Int) {
+        val v = ContentValues().apply { put("comprado", 1) }
+        writableDatabase.update("compras", v, "usuarioId = ?", arrayOf(usuarioId.toString()))
+    }
+
+    // Vacia por completo la lista de compras del usuario
+    fun limpiarCompras(usuarioId: Int) {
+        writableDatabase.delete("compras", "usuarioId = ?", arrayOf(usuarioId.toString()))
+    }
+
     // ---------------- PERFIL / ESTADISTICAS ----------------
 
     fun obtenerUsuario(id: Int): Usuario? {
         val c = readableDatabase.rawQuery(
-            "SELECT id, nombre, correo, clave, rol FROM usuarios WHERE id = ?", arrayOf(id.toString())
+            "SELECT id, nombre, correo, clave, rol, foto FROM usuarios WHERE id = ?",
+            arrayOf(id.toString())
         )
         var u: Usuario? = null
         if (c.moveToFirst()) {
-            u = Usuario(c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4))
+            u = Usuario(
+                c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4),
+                foto = c.getString(5) ?: ""
+            )
         }
         c.close()
         return u
@@ -471,8 +511,49 @@ class DBHelper(context: Context) :
     }
 
     fun resetearClave(id: Int, nuevaClave: String) {
-        val v = ContentValues().apply { put("clave", nuevaClave) }
+        val v = ContentValues().apply { put("clave", Seguridad.hashClave(nuevaClave)) }
         writableDatabase.update("usuarios", v, "id = ?", arrayOf(id.toString()))
+    }
+
+    // ---------- RECUPERACION DE CONTRASENA ----------
+
+    // Devuelve la pregunta de seguridad asociada a un correo, o null si no aplica
+    fun obtenerPreguntaPorCorreo(correo: String): String? {
+        val c = readableDatabase.rawQuery(
+            "SELECT pregunta FROM usuarios WHERE correo = ?", arrayOf(correo)
+        )
+        var pregunta: String? = null
+        if (c.moveToFirst()) {
+            val p = c.getString(0) ?: ""
+            if (p.isNotEmpty()) pregunta = p
+        }
+        c.close()
+        return pregunta
+    }
+
+    // Verifica la respuesta de seguridad y, si es correcta, devuelve el id del usuario
+    fun verificarRespuesta(correo: String, respuesta: String): Int {
+        val c = readableDatabase.rawQuery(
+            "SELECT id FROM usuarios WHERE correo = ? AND respuesta = ?",
+            arrayOf(correo, Seguridad.hashClave(respuesta.trim().lowercase()))
+        )
+        var id = -1
+        if (c.moveToFirst()) id = c.getInt(0)
+        c.close()
+        return id
+    }
+
+    // Cambia la clave de un usuario validando primero su clave actual
+    fun cambiarClave(id: Int, claveActual: String, claveNueva: String): Boolean {
+        val c = readableDatabase.rawQuery(
+            "SELECT id FROM usuarios WHERE id = ? AND clave = ?",
+            arrayOf(id.toString(), Seguridad.hashClave(claveActual))
+        )
+        val coincide = c.count > 0
+        c.close()
+        if (!coincide) return false
+        resetearClave(id, claveNueva)
+        return true
     }
 
     fun actualizarUltimoAcceso(id: Int) {
@@ -483,7 +564,7 @@ class DBHelper(context: Context) :
     fun obtenerEstadoPorCredenciales(correo: String, clave: String): String? {
         val c = readableDatabase.rawQuery(
             "SELECT estado FROM usuarios WHERE correo = ? AND clave = ?",
-            arrayOf(correo, clave)
+            arrayOf(correo, Seguridad.hashClave(clave))
         )
         var estado: String? = null
         if (c.moveToFirst()) estado = c.getString(0) ?: "activo"

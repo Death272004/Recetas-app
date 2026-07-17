@@ -11,9 +11,11 @@ This is an Android project — all building, running, and testing happens throug
 - **Clean build:** `Build → Clean Project`, then `Build → Rebuild Project`
 - **Sync after Gradle changes:** `File → Sync Project with Gradle Files`
 
-When the DB schema changes (tables added/columns added), bump `DBHelper` version number (currently `2`) and **reinstall the app** on the device — `onUpgrade` drops and recreates all tables, which also re-runs `SeedData.cargar()`.
+Toolchain: AGP 8.1.4, Gradle 8.2, Kotlin 1.9.10, JDK 17, compileSdk/targetSdk 34, minSdk 24.
 
-To inspect the live SQLite DB: **Android Studio → App Inspection → Database Inspector** (device must be connected and app running).
+When the DB schema changes, bump `DBHelper` version (currently **5**) and **reinstall the app** — `onUpgrade` drops and recreates all tables, which also re-runs `SeedData.cargar()`.
+
+To inspect the live SQLite DB: **Android Studio → App Inspection → Database Inspector**.
 
 ## Architecture
 
@@ -23,54 +25,85 @@ To inspect the live SQLite DB: **Android Studio → App Inspection → Database 
 
 ```
 SplashActivity (LAUNCHER)
-    ├── no session  → LoginActivity → RegistroActivity
+    ├── no session  → LoginActivity → RegistroActivity / RecuperarClaveActivity
+    │                 LoginActivity → "Continuar sin cuenta" → MainActivity (guest)
     ├── admin role  → AdminActivity
     └── user role   → MainActivity
 ```
 
-`SessionManager` (SharedPreferences key `sesion_recetas_lid`) holds `usuario_id`, `nombre`, `rol` for the active session.
+`SessionManager` (SharedPreferences key `sesion_recetas_lid`) holds `usuario_id`, `nombre`, `rol`.
+
+### Guest mode
+
+`MainActivity`, `ResultadosActivity` and `FeedActivity` are browsable without a session.
+Gated actions (open recipe detail, like, favorites) call **`LoginRapido.mostrar(activity, mensaje) { ... }`** —
+an `AlertDialog` built from `dialog_login.xml` that logs in inline and then runs the pending action
+via the `alEntrar` callback. Admins logging in through the dialog are redirected to `AdminActivity`.
+Prefer this over a Toast when a guest hits a gated action.
 
 ### Package layout
 
 | Package | Contents |
 |---|---|
-| `data/` | `DBHelper` (SQLite), `SeedData` (seed on first install), `SessionManager` |
-| `model/` | `Receta`, `Usuario`, `FeedPost` |
-| `adapter/` | `RecetaAdapter`, `CompraAdapter`, `UsuarioAdapter`, `FeedAdapter` |
-| `ui/` | All Activities |
+| `data/` | `DBHelper` (SQLite), `SeedData`, `SessionManager`, `Seguridad` (password hashing) |
+| `model/` | `Receta`, `Usuario`, `Comentario`, `FeedPost`, `LogAdmin` |
+| `adapter/` | `RecetaAdapter`, `CompraAdapter`, `UsuarioAdapter`, `FeedAdapter`, `ComentarioAdapter`, `Admin*Adapter` |
+| `ui/` | All Activities + `LoginRapido` (object, not an Activity — do not declare in the Manifest) |
 
-### Database (`recetas_lid.db`, version 2)
+### Database (`recetas_lid.db`, version 5)
 
-Four tables: `usuarios`, `recetas`, `favoritos`, `compras`.
+Seven tables: `usuarios`, `recetas`, `favoritos`, `compras`, `comentarios`, `logs_admin`, `papelera`.
 
-- `usuarios`: id, nombre, correo (UNIQUE), clave (plaintext), rol (`"admin"` | `"usuario"`)
-- `recetas`: id, titulo, ingredientes (comma-separated string), pasos, tiempo (min), costo (B/.), autorId, reportada, imagen (drawable name, no extension), videoUrl (full YouTube watch URL)
+- `usuarios`: id, nombre, correo (UNIQUE), clave (**SHA-256 hash**), rol (`"admin"` | `"usuario"`), estado, fechaRegistro, ultimoAcceso, pregunta, respuesta (**hashed**, lowercased+trimmed)
+- `recetas`: id, titulo, ingredientes (comma-separated string), pasos, tiempo (min), costo (B/.), autorId, reportada, imagen (drawable name, no extension), videoUrl, oculta, destacada
 - `favoritos`: usuarioId, recetaId (many-to-many join)
 - `compras`: usuarioId, item, precio, comprado (0/1)
+- `comentarios`: usuarioId, recetaId, texto, fecha, estado
+- `logs_admin`: adminId, accion, detalle, fecha
+- `papelera`: tipo, contenido, fechaEliminacion, eliminadoPor
 
-All queries use `rawQuery` with `?` placeholders. `cursorAReceta()` in `DBHelper` maps columns by name using `getColumnIndexOrThrow`.
+All queries use `rawQuery` with `?` placeholders. `cursorAReceta()` maps columns by name.
+
+### Passwords (RNF-03)
+
+**Never store or compare plaintext passwords.** `Seguridad.hashClave(clave)` returns SHA-256 of `SAL + clave`.
+`registrarUsuario`, `login`, `resetearClave`, `obtenerEstadoPorCredenciales`, `cambiarClave`,
+`verificarRespuesta` and `SeedData.insertarUsuario` all hash before touching the DB —
+callers pass the plaintext and let `DBHelper` do the hashing.
+
+### Password recovery
+
+`RecuperarClaveActivity` — 3 panels in one layout (`panelPaso1/2/3`, toggled with `visibility`):
+correo → security question → new password. Max 3 wrong answers, then the screen closes.
+Questions are defined in `RegistroActivity.preguntas`.
 
 ### Navigation
 
-`MainActivity` has a bottom nav bar (4 plain `TextView` buttons: `navHome`, `navFeed`, `navFavoritos`, `navOtros`). Navigation is manual `startActivity()` — no Jetpack Navigation component. Every secondary screen has a `btnVolver` that calls `finish()`.
+`MainActivity` has a bottom nav bar (`navHome`, `navFeed`, `navFavoritos`, `navOtros`).
+Navigation is manual `startActivity()` — no Jetpack Navigation component. Every secondary screen has `btnVolver` → `finish()`.
+
+`CrearRecetaActivity` doubles as the edit screen (RF-07): pass an `recetaId` extra to enter edit mode
+(it loads the recipe, retitles the screen, and calls `db.actualizarReceta()` instead of `insertarReceta()`).
+It rejects editing recipes the user doesn't own.
 
 ### Images & video
 
-- Recipe images: stored as drawable resource names in the `imagen` column. Loaded at runtime with `getIdentifier(name, "drawable", packageName)`. Falls back to `ic_receta` icon with orange background if name is empty or not found.
-- Videos: `videoUrl` holds a full YouTube watch URL. Opens via `Intent(ACTION_VIEW, Uri.parse(url))` — no WebView embedding.
-- Food photo drawables: `arroz_frito.jpg`, `ensalada_simple.jpg`, `pollo_guisado.jpg` in `res/drawable/`.
+- Recipe images: drawable resource names in the `imagen` column, resolved with `getIdentifier(name, "drawable", packageName)`. Falls back to `ic_receta` on `naranja_suave`.
+- Videos: `videoUrl` holds a full YouTube watch URL, opened via `Intent(ACTION_VIEW, ...)`.
+- Food photo drawables: `arroz_frito.jpg`, `ensalada_simple.jpg`, `pollo_guisado.jpg`.
 
 ### Colors (brand palette)
 
-`naranja` (#F2541B) is the primary brand color used for headers, buttons, and accents. Secondary: `naranja_oscuro`, `naranja_suave`. Neutral: `negro`, `gris`, `gris_claro`, `linea`, `blanco`. Status: `verde`.
+`naranja` (#F2541B) is the primary brand color. Secondary: `naranja_oscuro`, `naranja_suave`.
+Neutral: `negro`, `gris`, `gris_claro`, `linea`, `blanco`. Status: `verde`.
 
-### Admin user
+### Seeded accounts
 
-Seeded by `SeedData.cargar()` with correo `admin@lid.com`, clave `admin123`, rol `admin`. Admin sees `AdminActivity` (user list + reported recipes).
+`admin` / `Admin123` (rol admin) and `leo@correo.com` / `123456` (rol usuario).
+Security answer for both: `firulais`.
 
 ## Key constraints
 
-- `RecetasLID/` (sibling folder) is the **original backup** — never modify it.
-- No Room, no Coroutines, no LiveData — keep all DB calls synchronous on the main thread (acceptable for this academic project).
-- `Receta.ingredientes` is a plain comma-separated string; `listaIngredientes()` splits it. There is no separate ingredients table yet.
-- The `economicas` intent extra is still passed from `MainActivity` (hardcoded `false`) and read in `ResultadosActivity` / `DBHelper.buscarPorIngredientes()` but not displayed in the UI.
+- No Room, no Coroutines, no LiveData — DB calls stay synchronous on the main thread (acceptable for this academic project).
+- `Receta.ingredientes` is a plain comma-separated string; `listaIngredientes()` splits it.
+- Comments in the code are written in Spanish, beginner-friendly, per the professor's conventions.

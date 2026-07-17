@@ -95,6 +95,16 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtOlvide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="¿Olvidaste tu contrasena?"
+                android:textColor="@color/gris"
+                android:textSize="13sp"
+                android:paddingTop="14dp" />
+
+            <TextView
                 android:id="@+id/txtIrRegistro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

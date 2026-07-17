@@ -3,6 +3,7 @@ package com.utp.recetaslid.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.utp.recetaslid.adapter.CompraAdapter
@@ -46,6 +47,23 @@ class ComprasActivity : AppCompatActivity() {
         binding.recyclerCompras.adapter = adapter
 
         binding.btnVolver.setOnClickListener { finish() }
+
+        binding.btnMarcarTodo.setOnClickListener {
+            db.marcarTodoComprado(sesion.getUsuarioId())
+            refrescar()
+        }
+
+        binding.btnLimpiarLista.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("Limpiar lista")
+                .setMessage("¿Quitar todos los items de tu lista de compras?")
+                .setPositiveButton("Limpiar") { _, _ ->
+                    db.limpiarCompras(sesion.getUsuarioId())
+                    refrescar()
+                }
+                .setNegativeButton("Cancelar", null)
+                .show()
+        }
     }
 
     override fun onResume() {
