@@ -91,56 +91,84 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="4dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp">
+        android:orientation="vertical"
+        android:paddingStart="8dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp">
 
-        <Button
-            android:id="@+id/btnLike"
-            android:layout_width="44dp"
-            android:layout_height="40dp"
-            android:background="@android:color/transparent"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:padding="0dp"
-            android:text="♥"
-            android:textColor="@color/naranja"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/txtLikes"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
+            <Button
+                android:id="@+id/btnLike"
+                android:layout_width="44dp"
+                android:layout_height="42dp"
+                android:background="@android:color/transparent"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="0dp"
+                android:text="♥"
+                android:textColor="@color/naranja"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtLikes"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingStart="6dp"
+                android:paddingEnd="8dp"
+                android:text="0 Me gusta"
+                android:textColor="@color/texto_principal"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingStart="4dp"
-            android:paddingEnd="8dp"
-            android:text="0 Me gusta"
-            android:textColor="@color/texto_principal"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="2dp">
 
-        <Button
-            android:id="@+id/btnComentar"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:text="💬  Comentar"
-            android:textColor="@color/texto_secundario"
-            android:textSize="13sp" />
+            <Button
+                android:id="@+id/btnComentar"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:background="@android:color/transparent"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="💬  Comentar"
+                android:textAllCaps="false"
+                android:textColor="@color/texto_secundario"
+                android:textSize="13sp" />
 
-        <Button
-            android:id="@+id/btnCompartir"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:text="↗  Compartir"
-            android:textColor="@color/texto_secundario"
-            android:textSize="13sp" />
+            <Button
+                android:id="@+id/btnCompartir"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:background="@android:color/transparent"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="↗  Compartir"
+                android:textAllCaps="false"
+                android:textColor="@color/texto_secundario"
+                android:textSize="13sp" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
